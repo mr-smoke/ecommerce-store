@@ -29,3 +29,34 @@ export const signup = async (req, res) => {
     });
   }
 };
+
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({
+      email,
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        error: "User with that email does not exist. Please signup",
+      });
+    }
+
+    if (!(await user.matchPassword(password))) {
+      return res.status(400).json({
+        error: "Email and password do not match",
+      });
+    }
+
+    res.status(200).json({
+      message: "Signin success!",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: error,
+    });
+  }
+};
