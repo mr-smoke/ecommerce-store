@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import { tokenization } from "../lib/auth.js";
 
 export const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -19,6 +20,8 @@ export const signup = async (req, res) => {
     });
 
     await user.save();
+
+    await tokenization(user._id, res);
 
     res.status(201).json({
       message: "Signup success! Please signin",
@@ -49,6 +52,8 @@ export const login = async (req, res) => {
         error: "Email and password do not match",
       });
     }
+
+    await tokenization(user._id, res);
 
     res.status(200).json({
       message: "Signin success!",
