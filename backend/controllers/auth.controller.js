@@ -79,12 +79,56 @@ export const logout = async (req, res) => {
     }
 
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-    await redis.del(`refreshToken:${decoded._id}`);
+    await redis.del(`refreshToken:${decoded.userId}`);
 
     res.clearCookie("refreshToken");
     res.clearCookie("accessToken");
     res.json({
       message: "Signout success",
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: error,
+    });
+  }
+};
+
+export const refreshToken = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+
+    if (!refreshToken) {
+      return res.status(400).json({
+        error: "User not logged in",
+      });
+    }
+
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    const token = await redis.get(`refreshToken:${decoded.userId}`);
+
+    if (token !== refreshToken) {
+      return res.status(400).json({
+        error: "Invalid refresh token",
+      });
+    }
+
+    const accessToken = jwt.sign(
+      { userId: decoded.userId },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "15m",
+      }
+    );
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      maxAge: 15 * 60 * 1000,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    res.status(200).json({
+      message: "Refresh token success",
     });
   } catch (error) {
     res.status(400).json({
