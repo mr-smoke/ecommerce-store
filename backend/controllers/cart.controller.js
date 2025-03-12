@@ -21,3 +21,24 @@ export const addToCart = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const removeFromCart = async (req, res) => {
+  const { productId } = req.body;
+
+  try {
+    const user = req.user;
+
+    if (!productId) {
+      user.cartItems = [];
+    } else {
+      user.cartItems = user.cartItems.filter((item) => item.id !== productId);
+    }
+
+    await user.save();
+
+    res.status(201).json(user.cartItems);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
