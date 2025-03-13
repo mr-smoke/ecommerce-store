@@ -84,7 +84,6 @@ export const updateCart = async (req, res) => {
 
     if (quantity === 0) {
       user.cartItems = user.cartItems.filter((item) => item.id !== productId);
-      console.log(user.cartItems);
     } else {
       isExisting.quantity = quantity;
     }
