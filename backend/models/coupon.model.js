@@ -2,10 +2,14 @@ import mongoose from "mongoose";
 
 const couponSchema = new mongoose.Schema(
   {
-    code: {
+    name: {
       type: String,
-      required: true,
+      trim: true,
       unique: true,
+      uppercase: true,
+      required: true,
+      minlength: 6,
+      maxlength: 12,
     },
     discount: {
       type: Number,
