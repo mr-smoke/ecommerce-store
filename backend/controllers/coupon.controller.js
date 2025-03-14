@@ -24,3 +24,30 @@ export const createCoupon = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const validateCoupon = async (req, res) => {
+  const { name } = req.body;
+
+  try {
+    const coupon = await Coupon.findOne({ name });
+
+    if (!coupon) {
+      return res.status(400).json({ error: "Coupon not found" });
+    }
+
+    if (!coupon.isActive) {
+      return res.status(400).json({ error: "Coupon is not active" });
+    }
+
+    if (new Date(coupon.expiry) < new Date()) {
+      coupon.isActive = false;
+      await coupon.save();
+
+      return res.status(400).json({ error: "Coupon has expired" });
+    }
+
+    res.json(coupon);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
