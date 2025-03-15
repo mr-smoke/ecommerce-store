@@ -75,3 +75,34 @@ export const createCheckoutSession = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const checkoutSuccess = async (req, res) => {
+  const { sessionId } = req.body;
+
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+    if (session.payment_status === "paid") {
+      const products = JSON.parse(session.metadata.products);
+
+      const order = new Order({
+        user: session.metadata.userId,
+        orderItems: products.map((product) => ({
+          product: product.id,
+          price: product.price,
+          quantity: product.quantity,
+        })),
+        totalPrice: session.amount_total / 100,
+        stripeSessionId: sessionId,
+      });
+
+      await order.save();
+
+      return res.status(201).json({ message: "Payment successful" });
+    }
+
+    res.status(400).json({ message: "Payment failed" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
