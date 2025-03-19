@@ -12,7 +12,7 @@ const Navbar = () => {
   const isAdmin = true;
 
   return (
-    <header className="bg-gray-900">
+    <header className="bg-gray-900 fixed w-full">
       <nav className="container mx-auto flex items-center justify-between flex-wrap p-6">
         <Link to="/" className="text-3xl font-bold text-emerald-400">
           E-Commerce
