@@ -23,7 +23,7 @@ const categories = [
 
 const Home = () => {
   return (
-    <main className="max-w-6xl mx-auto min-h-screen pt-24 px-2">
+    <main className="max-w-6xl mx-auto pt-24 px-2">
       <h1 className="pt-16 text-5xl font-semibold text-center text-emerald-400">
         Explore Categories
       </h1>
