@@ -5,6 +5,7 @@ import {
   LuChartNoAxesCombined,
 } from "react-icons/lu";
 import { useState } from "react";
+import Products from "../components/Products";
 
 const tabs = [
   {
@@ -47,6 +48,7 @@ const Dashboard = () => {
           </button>
         ))}
       </div>
+      {activeTab === "products" && <Products />}
     </main>
   );
 };
