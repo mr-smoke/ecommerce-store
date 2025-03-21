@@ -6,6 +6,7 @@ import {
 } from "react-icons/lu";
 import { useState } from "react";
 import Products from "../components/Products";
+import CreateProduct from "../components/CreateProduct";
 
 const tabs = [
   {
@@ -49,6 +50,7 @@ const Dashboard = () => {
         ))}
       </div>
       {activeTab === "products" && <Products />}
+      {activeTab === "create" && <CreateProduct />}
     </main>
   );
 };
