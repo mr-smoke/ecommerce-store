@@ -7,6 +7,7 @@ import {
 import { useState } from "react";
 import Products from "../components/Products";
 import CreateProduct from "../components/CreateProduct";
+import Analytics from "../components/Analytics";
 
 const tabs = [
   {
@@ -51,6 +52,7 @@ const Dashboard = () => {
       </div>
       {activeTab === "products" && <Products />}
       {activeTab === "create" && <CreateProduct />}
+      {activeTab === "analytics" && <Analytics />}
     </main>
   );
 };
