@@ -34,7 +34,7 @@ const Home = () => {
         {categories.map((category) => (
           <Link
             key={category.id + category}
-            href={category.href}
+            to={category.href}
             className="relative overflow-hidden bg-white rounded-lg shadow-lg"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-50 z-10" />
