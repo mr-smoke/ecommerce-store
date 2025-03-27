@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Category from "./pages/Category";
+import Cart from "./pages/Cart";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/category/:id" element={<Category />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </div>
     </div>
