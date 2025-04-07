@@ -12,12 +12,12 @@ const Navbar = () => {
   const isAdmin = true;
 
   return (
-    <header className="bg-gray-900 fixed w-full">
-      <nav className="container mx-auto flex items-center justify-between flex-wrap p-6">
+    <header className="bg-gray-900 shadow-lg fixed w-full">
+      <div className="container mx-auto flex items-center justify-between flex-wrap p-6">
         <Link to="/" className="text-3xl font-bold text-emerald-400">
           E-Commerce
         </Link>
-        <div className="flex items-center gap-4">
+        <nav className="flex items-center gap-4">
           <Link
             to="/"
             className="text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out"
@@ -71,8 +71,8 @@ const Navbar = () => {
               </Link>
             </>
           )}
-        </div>
-      </nav>
+        </nav>
+      </div>
     </header>
   );
 };
