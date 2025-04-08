@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Category from "./pages/Category";
 import Cart from "./pages/Cart";
 import Navbar from "./components/Navbar";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
         </Routes>
       </div>
+      <Toaster />
     </div>
   );
 }

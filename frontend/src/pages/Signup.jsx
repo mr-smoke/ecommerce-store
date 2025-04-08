@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { LuUser, LuMail, LuLock } from "react-icons/lu";
 import { useState } from "react";
+import { useUserStore } from "../stores/useUserStore";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -10,9 +11,19 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  const { signup } = useUserStore();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    signup(formData);
+  };
+
   return (
     <main className="flex items-center justify-center min-h-screen">
-      <form className="bg-gray-900 shadow p-10 rounded-lg flex flex-col gap-4 sm:w-96">
+      <form
+        className="bg-gray-900 shadow p-10 rounded-lg flex flex-col gap-4 sm:w-96"
+        onSubmit={handleSubmit}
+      >
         <h1 className="text-4xl font-extrabold text-emerald-400 text-center">
           Signup
         </h1>
@@ -27,6 +38,7 @@ const Signup = () => {
               id="name"
               className="bg-gray-700 text-gray-300 w-full outline-none"
               placeholder="Enter your name"
+              required
               maxLength={20}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -45,6 +57,7 @@ const Signup = () => {
               id="email"
               className="bg-gray-700 text-gray-300 w-full outline-none"
               placeholder="Enter your email"
+              required
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
@@ -62,6 +75,7 @@ const Signup = () => {
               id="password"
               className="bg-gray-700 text-gray-300 w-full outline-none"
               placeholder="Enter your password"
+              required
               minLength={6}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
@@ -83,6 +97,7 @@ const Signup = () => {
               id="confirmPassword"
               className="bg-gray-700 text-gray-300 w-full outline-none"
               placeholder="Confirm your password"
+              required
               minLength={6}
               onChange={(e) =>
                 setFormData({ ...formData, confirmPassword: e.target.value })
