@@ -24,4 +24,30 @@ export const useUserStore = create((set) => ({
       set({ loading: false });
     }
   },
+  login: async (userData) => {
+    set({ loading: true });
+
+    try {
+      const response = await axios.post("/auth/login", userData);
+      set({ user: response.data });
+      toast.success("Login successful!");
+    } catch (error) {
+      toast.error(error.response.data.error || "Login failed!");
+    } finally {
+      set({ loading: false });
+    }
+  },
+  logout: async () => {
+    set({ loading: true });
+
+    try {
+      await axios.post("/auth/logout");
+      set({ user: null });
+      toast.success("Logout successful!");
+    } catch (error) {
+      toast.error(error.response.data.error || "Logout failed!");
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

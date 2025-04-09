@@ -6,8 +6,11 @@ import {
   LuLogOut,
   LuUserPlus,
 } from "react-icons/lu";
+import { useUserStore } from "../stores/useUserStore";
 
 const Navbar = () => {
+  const { logout } = useUserStore();
+
   const user = true;
   const isAdmin = true;
 
@@ -47,7 +50,7 @@ const Navbar = () => {
           )}
           {user ? (
             <button
-              onClick={() => alert("Logout")}
+              onClick={() => logout()}
               className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md flex items-center gap-1 transition duration-300 ease-in-out"
             >
               <LuLogOut size={20} />

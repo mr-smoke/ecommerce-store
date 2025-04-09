@@ -61,7 +61,10 @@ export const login = async (req, res) => {
     await tokenization(user._id, res);
 
     res.status(200).json({
-      message: "Signin success!",
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
     });
   } catch (error) {
     res.status(400).json({

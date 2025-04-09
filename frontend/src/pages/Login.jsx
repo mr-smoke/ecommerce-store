@@ -1,13 +1,24 @@
 import { LuMail, LuLock } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useUserStore } from "../stores/useUserStore";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
+  const { login } = useUserStore();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    login(formData);
+  };
+
   return (
     <main className="flex items-center justify-center min-h-screen">
-      <form className="bg-gray-900 shadow p-10 rounded-lg flex flex-col gap-4 sm:w-96">
+      <form
+        className="bg-gray-900 shadow p-10 rounded-lg flex flex-col gap-4 sm:w-96"
+        onSubmit={handleSubmit}
+      >
         <h1 className="text-4xl font-extrabold text-emerald-400 text-center">
           Login
         </h1>
