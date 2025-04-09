@@ -141,3 +141,21 @@ export const refreshToken = async (req, res) => {
     });
   }
 };
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+
+    if (!user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({
+      error: error,
+    });
+  }
+};

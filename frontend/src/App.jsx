@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -7,8 +7,16 @@ import Category from "./pages/Category";
 import Cart from "./pages/Cart";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
+import { useUserStore } from "./stores/useUserStore";
+import { useEffect } from "react";
 
 function App() {
+  const { user, getUser } = useUserStore();
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
+
   return (
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
@@ -20,11 +28,25 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/signup"
+            element={!user ? <Signup /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/dashboard"
+            element={
+              user?.role === "admin" ? <Dashboard /> : <Navigate to="/" />
+            }
+          />
           <Route path="/category/:id" element={<Category />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/cart"
+            element={user ? <Cart /> : <Navigate to="/login" />}
+          />
         </Routes>
       </div>
       <Toaster />

@@ -50,4 +50,16 @@ export const useUserStore = create((set) => ({
       set({ loading: false });
     }
   },
+  getUser: async () => {
+    set({ loading: true });
+
+    try {
+      const response = await axios.get("/auth/get-user");
+      set({ user: response.data });
+    } catch (error) {
+      toast.error(error.response.data.error || "Failed to fetch user!");
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

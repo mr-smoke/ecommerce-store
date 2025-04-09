@@ -9,10 +9,8 @@ import {
 import { useUserStore } from "../stores/useUserStore";
 
 const Navbar = () => {
-  const { logout } = useUserStore();
-
-  const user = true;
-  const isAdmin = true;
+  const { logout, user } = useUserStore();
+  const isAdmin = user && user.role === "admin";
 
   return (
     <header className="bg-gray-900 shadow-lg fixed w-full">
