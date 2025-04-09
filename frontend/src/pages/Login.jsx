@@ -1,4 +1,4 @@
-import { LuMail, LuLock } from "react-icons/lu";
+import { LuMail, LuLock, LuLoader } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useUserStore } from "../stores/useUserStore";
@@ -6,7 +6,7 @@ import { useUserStore } from "../stores/useUserStore";
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
 
-  const { login } = useUserStore();
+  const { login, loading } = useUserStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,8 +60,16 @@ const Login = () => {
         <button
           type="submit"
           className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-2 rounded-lg w-full mt-4 transition duration-150 ease-in-out"
+          disabled={loading}
         >
-          Login
+          {loading ? (
+            <span className="flex justify-center items-center gap-2">
+              <LuLoader className="animate-spin" size={20} />
+              Loading...
+            </span>
+          ) : (
+            "Login"
+          )}
         </button>
         <p className="text-gray-300 text-center">
           Don't have an account?{" "}

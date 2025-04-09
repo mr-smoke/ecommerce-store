@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LuUser, LuMail, LuLock } from "react-icons/lu";
+import { LuUser, LuMail, LuLock, LuLoader } from "react-icons/lu";
 import { useState } from "react";
 import { useUserStore } from "../stores/useUserStore";
 
@@ -11,7 +11,7 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const { signup } = useUserStore();
+  const { signup, loading } = useUserStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,8 +108,16 @@ const Signup = () => {
         <button
           type="submit"
           className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-2 rounded-lg w-full mt-4 transition duration-150 ease-in-out"
+          disabled={loading}
         >
-          Signup
+          {loading ? (
+            <span className="flex justify-center items-center gap-2">
+              <LuLoader className="animate-spin" size={20} />
+              Loading...
+            </span>
+          ) : (
+            "Signup"
+          )}
         </button>
         <p className="text-gray-300 text-center">
           Already have an account?{" "}
