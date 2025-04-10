@@ -33,6 +33,7 @@ const Login = () => {
               id="email"
               className="bg-gray-700 text-gray-300 w-full outline-none"
               placeholder="Enter your email"
+              required
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
@@ -50,6 +51,7 @@ const Login = () => {
               id="password"
               className="bg-gray-700 text-gray-300 w-full outline-none"
               placeholder="Enter your password"
+              required
               minLength={6}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })

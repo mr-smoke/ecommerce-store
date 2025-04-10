@@ -1,25 +1,5 @@
 import { Link } from "react-router-dom";
-
-const categories = [
-  {
-    href: "/category/1",
-    name: "Category 1",
-    id: 1,
-    img: "/category1.jpg",
-  },
-  {
-    href: "/category/2",
-    name: "Category 2",
-    id: 2,
-    img: "/category2.jpg",
-  },
-  {
-    href: "/category/3",
-    name: "Category 3",
-    id: 3,
-    img: "/category3.jpg",
-  },
-];
+import { categories } from "../lib/data";
 
 const Home = () => {
   return (
