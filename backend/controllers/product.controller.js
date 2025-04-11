@@ -34,6 +34,11 @@ export const deleteProduct = async (req, res) => {
       return res.status(404).json({ error: "Product not found" });
     }
 
+    if (product.photo) {
+      const publicId = product.photo.split("/").pop().split(".")[0];
+      await cloudinary.uploader.destroy(publicId);
+    }
+
     await Product.findByIdAndDelete(productId);
 
     res.status(201).json({ product });

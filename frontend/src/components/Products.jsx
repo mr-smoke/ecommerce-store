@@ -3,7 +3,7 @@ import { useProductStore } from "../stores/useProductStore";
 import { useEffect } from "react";
 
 const Products = () => {
-  const { products, getProducts, loading } = useProductStore();
+  const { products, getProducts, loading, deleteProduct } = useProductStore();
 
   useEffect(() => {
     getProducts();
@@ -64,7 +64,10 @@ const Products = () => {
               </button>
             </td>
             <td className="px-6 py-4 whitespace-no-wrap">
-              <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
+              <button
+                className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+                onClick={() => deleteProduct(product._id)}
+              >
                 <LuTrash2 />
               </button>
             </td>
