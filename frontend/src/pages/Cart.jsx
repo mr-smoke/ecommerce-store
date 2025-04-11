@@ -5,9 +5,12 @@ import {
   LuCircleMinus,
   LuArrowRight,
 } from "react-icons/lu";
+import { useCartStore } from "../stores/useCartStore";
+import { useEffect } from "react";
 
 const Cart = () => {
-  const cart = [
+  const { loading, cart, getCartItems } = useCartStore();
+  const cartItems = [
     {
       id: 1,
       name: "Product Name",
@@ -26,11 +29,15 @@ const Cart = () => {
     },
   ];
 
+  useEffect(() => {
+    getCartItems();
+  }, [getCartItems]);
+
   return (
     <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-40">
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="sm:w-3/4 flex flex-col gap-4">
-          {cart.map((product) => (
+          {cartItems.map((product) => (
             <div
               key={product.id}
               className="flex justify-center items-center p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm"
