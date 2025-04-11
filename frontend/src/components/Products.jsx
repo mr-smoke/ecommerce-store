@@ -1,7 +1,13 @@
 import { LuStar, LuTrash2 } from "react-icons/lu";
+import { useProductStore } from "../stores/useProductStore";
+import { useEffect } from "react";
 
 const Products = () => {
-  const featured = true;
+  const { products, getProducts, loading } = useProductStore();
+
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
 
   return (
     <table className="min-w-full rounded-lg overflow-hidden bg-gray-800">
@@ -15,39 +21,55 @@ const Products = () => {
         </tr>
       </thead>
       <tbody className="text-gray-300 text-sm">
-        <tr className="hover:bg-gray-700">
-          <td className="px-6 py-4 whitespace-nowrap">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 h-10 w-10">
-                <img
-                  className="h-10 w-10 rounded-full object-cover"
-                  src="https://via.placeholder.com/150"
-                  alt=""
-                />
+        {loading && (
+          <tr>
+            <td colSpan="5" className="text-center py-4">
+              Loading...
+            </td>
+          </tr>
+        )}
+        {products.length === 0 && (
+          <tr>
+            <td colSpan="5" className="text-center py-4">
+              No products found
+            </td>
+          </tr>
+        )}
+        {products.map((product) => (
+          <tr className="hover:bg-gray-700" key={product._id}>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <div className="flex items-center">
+                <div className="flex-shrink-0 h-10 w-10">
+                  <img
+                    className="h-10 w-10 rounded-full object-cover"
+                    src={product.photo}
+                    alt={product.name}
+                  />
+                </div>
+                <p className="ml-4 font-semibold">{product.name}</p>
               </div>
-              <p className="ml-4 font-semibold">Product Name</p>
-            </div>
-          </td>
-          <td className="px-6 py-4 whitespace-nowrap">$120.00</td>
-          <td className="px-6 py-4 whitespace-nowrap">Category</td>
-          <td className="px-6 py-4 whitespace-nowrap">
-            <button
-              className={`text-white font-bold py-2 px-4 rounded transition-colors duration-200
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">{product.price}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{product.category}</td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <button
+                className={`text-white font-bold py-2 px-4 rounded transition-colors duration-200
                 ${
-                  featured
+                  product.featured
                     ? "bg-emerald-600 hover:bg-emerald-700"
                     : "bg-gray-600 hover:bg-gray-700"
                 }`}
-            >
-              <LuStar />
-            </button>
-          </td>
-          <td className="px-6 py-4 whitespace-no-wrap">
-            <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
-              <LuTrash2 />
-            </button>
-          </td>
-        </tr>
+              >
+                <LuStar />
+              </button>
+            </td>
+            <td className="px-6 py-4 whitespace-no-wrap">
+              <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
+                <LuTrash2 />
+              </button>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
