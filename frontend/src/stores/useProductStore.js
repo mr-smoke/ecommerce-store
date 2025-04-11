@@ -46,4 +46,24 @@ export const useProductStore = create((set) => ({
       set({ loading: false });
     }
   },
+  toggleFeaturedProducts: async (productId) => {
+    set({ loading: true });
+
+    try {
+      const response = await axios.patch(
+        `/product/toggleFeatured/${productId}`
+      );
+      set((state) => ({
+        products: state.products.map((product) =>
+          product._id === productId
+            ? { ...product, featured: response.data.featured }
+            : product
+        ),
+      }));
+    } catch (error) {
+      toast.error(error.response.data.error || "Product update failed!");
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

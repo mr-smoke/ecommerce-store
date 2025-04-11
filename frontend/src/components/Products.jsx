@@ -3,7 +3,13 @@ import { useProductStore } from "../stores/useProductStore";
 import { useEffect } from "react";
 
 const Products = () => {
-  const { products, getProducts, loading, deleteProduct } = useProductStore();
+  const {
+    products,
+    getProducts,
+    loading,
+    deleteProduct,
+    toggleFeaturedProducts,
+  } = useProductStore();
 
   useEffect(() => {
     getProducts();
@@ -49,7 +55,7 @@ const Products = () => {
                 <p className="ml-4 font-semibold">{product.name}</p>
               </div>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap">{product.price}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{product.price}$</td>
             <td className="px-6 py-4 whitespace-nowrap">{product.category}</td>
             <td className="px-6 py-4 whitespace-nowrap">
               <button
@@ -59,6 +65,9 @@ const Products = () => {
                     ? "bg-emerald-600 hover:bg-emerald-700"
                     : "bg-gray-600 hover:bg-gray-700"
                 }`}
+                onClick={() => {
+                  toggleFeaturedProducts(product._id);
+                }}
               >
                 <LuStar />
               </button>

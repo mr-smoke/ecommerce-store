@@ -4,7 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 export const createProduct = async (req, res) => {
   const { image } = req.body;
-  let img = [];
+  let img = null;
 
   try {
     if (image) {
@@ -14,7 +14,7 @@ export const createProduct = async (req, res) => {
 
     const product = new Product({
       ...req.body,
-      photo: img,
+      photo: image ? img : "nophoto.jpg",
     });
     product.save();
 
@@ -37,6 +37,14 @@ export const deleteProduct = async (req, res) => {
     if (product.photo) {
       const publicId = product.photo.split("/").pop().split(".")[0];
       await cloudinary.uploader.destroy(publicId);
+    }
+
+    if (product.featured) {
+      const featuredProducts = await Product.find({
+        featured: true,
+        _id: { $ne: productId },
+      });
+      await redis.set("featuredProducts", JSON.stringify(featuredProducts));
     }
 
     await Product.findByIdAndDelete(productId);
@@ -116,7 +124,7 @@ export const toggleFeaturedProducts = async (req, res) => {
     const featuredProducts = await Product.find({ featured: true });
     await redis.set("featuredProducts", JSON.stringify(featuredProducts));
 
-    res.status(201).json({ product });
+    res.status(201).json(product);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
