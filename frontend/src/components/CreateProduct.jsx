@@ -39,11 +39,13 @@ const CreateProduct = () => {
       };
       reader.readAsDataURL(file);
     }
+
+    e.target.value = "";
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createProduct(productData);
+    await createProduct(formData);
     setFormData({
       name: "",
       description: "",
@@ -56,7 +58,10 @@ const CreateProduct = () => {
 
   return (
     <div className="flex justify-center mb-8">
-      <form className="bg-gray-800 shadow p-10 rounded-lg flex flex-col gap-3 sm:w-96">
+      <form
+        className="bg-gray-800 shadow p-10 rounded-lg flex flex-col gap-3 sm:w-96"
+        onSubmit={handleSubmit}
+      >
         <div className="flex">
           <label
             htmlFor="image"
@@ -83,6 +88,7 @@ const CreateProduct = () => {
             placeholder="Enter product name"
             required
             maxLength="32"
+            value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
         </div>
@@ -97,6 +103,7 @@ const CreateProduct = () => {
             rows="4"
             required
             maxLength="100"
+            value={formData.description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
@@ -114,6 +121,7 @@ const CreateProduct = () => {
             placeholder="Enter product price"
             required
             max="1000000"
+            value={formData.price}
             onChange={(e) =>
               setFormData({ ...formData, price: e.target.value })
             }
@@ -128,6 +136,7 @@ const CreateProduct = () => {
             className="bg-gray-600 text-gray-300 w-full outline-none border border-transparent focus:outline-none rounded-lg p-2"
             placeholder="Enter product category"
             required
+            value={formData.category}
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
             }
@@ -152,6 +161,7 @@ const CreateProduct = () => {
             className="bg-gray-600 text-gray-300 w-full outline-none p-2 rounded-lg"
             placeholder="Enter product quantity"
             max="1000000"
+            value={formData.quantity}
             onChange={(e) =>
               setFormData({ ...formData, quantity: e.target.value })
             }

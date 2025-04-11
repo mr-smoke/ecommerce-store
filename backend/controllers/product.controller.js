@@ -1,9 +1,21 @@
 import Product from "../models/product.model.js";
 import { redis } from "../lib/redis.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const createProduct = async (req, res) => {
+  const { image } = req.body;
+  let img = [];
+
   try {
-    const product = new Product(req.body);
+    if (image) {
+      const uploadedResponse = await cloudinary.uploader.upload(image);
+      img = uploadedResponse.secure_url;
+    }
+
+    const product = new Product({
+      ...req.body,
+      photo: img,
+    });
     product.save();
 
     res.status(201).json({ product });

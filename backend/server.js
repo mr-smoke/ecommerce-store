@@ -9,6 +9,7 @@ import couponRoutes from "./routes/coupon.route.js";
 import paymentRoutes from "./routes/payment.route.js";
 import analyticsRoutes from "./routes/analytics.route.js";
 import cookieParser from "cookie-parser";
+import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
 const app = express();
@@ -23,7 +24,13 @@ app.use(
 
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
