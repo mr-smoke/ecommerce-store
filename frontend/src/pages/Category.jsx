@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { LuShoppingCart } from "react-icons/lu";
 import { useProductStore } from "../stores/useProductStore";
+import { useCartStore } from "../stores/useCartStore";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const Category = () => {
   const { products, loading, getProductsByCategory } = useProductStore();
+  const { addToCart } = useCartStore();
   const { id } = useParams();
 
   useEffect(() => {
@@ -23,7 +25,10 @@ const Category = () => {
         </div>
       )}
       {products.map((product) => (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          key={product._id}
+        >
           <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-md flex flex-col gap-4 p-6">
             <img
               src={product.photo}
@@ -36,7 +41,10 @@ const Category = () => {
             <p className="text-emerald-400 font-bold text-2xl">
               ${product.price}
             </p>
-            <button className="bg-emerald-600 hover:bg-emerald-700 text-white font- p-2 rounded-lg w-full transition duration-150 ease-in-out flex items-center justify-center gap-3">
+            <button
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font- p-2 rounded-lg w-full transition duration-150 ease-in-out flex items-center justify-center gap-3"
+              onClick={() => addToCart(product._id)}
+            >
               <LuShoppingCart />
               Add to Cart
             </button>
