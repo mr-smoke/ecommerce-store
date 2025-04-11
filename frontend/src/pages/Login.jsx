@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useUserStore } from "../stores/useUserStore";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-
   const { login, loading } = useUserStore();
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

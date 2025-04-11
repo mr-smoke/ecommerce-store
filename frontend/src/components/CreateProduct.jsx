@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { categories } from "../lib/data";
 import { toast } from "react-hot-toast";
+import { useProductStore } from "../stores/useProductStore";
 
 const CreateProduct = () => {
+  const { createProduct } = useProductStore();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -37,6 +39,19 @@ const CreateProduct = () => {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await createProduct(productData);
+    setFormData({
+      name: "",
+      description: "",
+      price: "",
+      category: "",
+      quantity: "",
+      image: "",
+    });
   };
 
   return (
