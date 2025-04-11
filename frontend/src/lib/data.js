@@ -1,37 +1,37 @@
 export const categories = [
   {
     id: 1,
-    name: "Electronics",
+    name: "electronics",
     img: "/images/electronics.jpg",
     href: "/category/electronics",
   },
   {
     id: 2,
-    name: "Fashion",
+    name: "fashion",
     img: "/images/fashion.jpg",
     href: "/category/fashion",
   },
   {
     id: 3,
-    name: "Home",
+    name: "home",
     img: "/images/home.jpg",
     href: "/category/home",
   },
   {
     id: 4,
-    name: "Books",
+    name: "books",
     img: "/images/books.jpg",
     href: "/category/books",
   },
   {
     id: 5,
-    name: "Sports",
+    name: "sports",
     img: "/images/sports.jpg",
     href: "/category/sports",
   },
   {
     id: 6,
-    name: "Toys",
+    name: "toys",
     img: "/images/toys.jpg",
     href: "/category/toys",
   },

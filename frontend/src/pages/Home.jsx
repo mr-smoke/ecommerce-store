@@ -24,7 +24,7 @@ const Home = () => {
               className="object-cover w-full h-48"
             />
             <div className="p-4">
-              <h2 className="z-20 text-black text-lg font-semibold bg-white">
+              <h2 className="z-20 text-black text-lg font-semibold bg-white capitalize">
                 {category.name}
               </h2>
             </div>

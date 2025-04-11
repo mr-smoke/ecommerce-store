@@ -55,7 +55,7 @@ const Products = () => {
                 <p className="ml-4 font-semibold">{product.name}</p>
               </div>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap">{product.price}$</td>
+            <td className="px-6 py-4 whitespace-nowrap">${product.price}</td>
             <td className="px-6 py-4 whitespace-nowrap">{product.category}</td>
             <td className="px-6 py-4 whitespace-nowrap">
               <button
