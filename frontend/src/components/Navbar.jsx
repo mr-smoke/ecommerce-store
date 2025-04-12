@@ -8,9 +8,11 @@ import {
   LuLoader,
 } from "react-icons/lu";
 import { useUserStore } from "../stores/useUserStore";
+import { useCartStore } from "../stores/useCartStore";
 
 const Navbar = () => {
   const { logout, user, loading } = useUserStore();
+  const { cart } = useCartStore();
   const isAdmin = user && user.role === "admin";
 
   return (
@@ -34,7 +36,7 @@ const Navbar = () => {
               <LuShoppingCart size={20} />
               <span className="inline">Cart</span>
               <span className="absolute -top-1 -left-1 bg-emerald-400 text-white rounded-full px-1 text-xs">
-                0
+                {cart.length}
               </span>
             </Link>
           )}

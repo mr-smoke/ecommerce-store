@@ -15,9 +15,19 @@ const Cart = () => {
     <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-40">
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="sm:w-3/4 flex flex-col gap-4">
+          {cart.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-full p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm">
+              <h2 className="text-2xl text-gray-400 font-bold">
+                Your cart is empty
+              </h2>
+              <Link to="/" className="text-emerald-400 underline font-medium">
+                Continue Shopping
+              </Link>
+            </div>
+          )}
           {cart.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="flex justify-center items-center p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm"
             >
               <img src={product.photo} alt="Product" className="w-24 h-24" />
