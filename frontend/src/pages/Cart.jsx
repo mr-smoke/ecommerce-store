@@ -9,7 +9,7 @@ import { useCartStore } from "../stores/useCartStore";
 import { useEffect } from "react";
 
 const Cart = () => {
-  const { loading, cart, getCartItems } = useCartStore();
+  const { loading, cart } = useCartStore();
   const cartItems = [
     {
       id: 1,
@@ -28,10 +28,6 @@ const Cart = () => {
       quantity: 1,
     },
   ];
-
-  useEffect(() => {
-    getCartItems();
-  }, [getCartItems]);
 
   return (
     <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-40">

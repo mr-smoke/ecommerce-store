@@ -8,14 +8,22 @@ import Cart from "./pages/Cart";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
+import { useCartStore } from "./stores/useCartStore";
 import { useEffect } from "react";
 
 function App() {
   const { user, getUser, loading } = useUserStore();
+  const { getCartItems } = useCartStore();
 
   useEffect(() => {
     getUser();
   }, [getUser]);
+
+  useEffect(() => {
+    if (user) {
+      getCartItems();
+    }
+  }, [user, getCartItems]);
 
   if (loading) {
     return (

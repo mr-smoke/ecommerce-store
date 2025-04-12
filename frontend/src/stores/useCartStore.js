@@ -23,7 +23,19 @@ export const useCartStore = create((set) => ({
 
     try {
       const response = await axios.post(`/cart/add/${productId}`);
-      set({ cart: response.data.cart });
+      set((state) => {
+        const isExisting = state.cart.find((item) => item._id === productId);
+        if (isExisting) {
+          return {
+            cart: state.cart.map((item) =>
+              item._id === productId
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            ),
+          };
+        }
+        return { cart: [...state.cart, { ...response.data, quantity: 1 }] };
+      });
       toast.success("Product added to cart!");
     } catch (error) {
       toast.error(

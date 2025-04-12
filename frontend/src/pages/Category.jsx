@@ -19,17 +19,17 @@ const Category = () => {
       <h1 className="text-3xl font-semibold text-center text-emerald-400 pt-16">
         Category Name
       </h1>
-      {products.length === 0 && (
-        <div className="flex items-center justify-center">
-          <p className="text-gray-300">No products found in this category.</p>
-        </div>
-      )}
-      {products.map((product) => (
-        <div
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-          key={product._id}
-        >
-          <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-md flex flex-col gap-4 p-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {products.length === 0 && (
+          <div className="flex items-center justify-center">
+            <p className="text-gray-300">No products found in this category.</p>
+          </div>
+        )}
+        {products.map((product) => (
+          <div
+            className="bg-gray-900 border border-gray-700 rounded-lg shadow-md flex flex-col gap-4 p-6"
+            key={product._id}
+          >
             <img
               src={product.photo}
               alt={product.name}
@@ -49,8 +49,8 @@ const Category = () => {
               Add to Cart
             </button>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </main>
   );
 };
