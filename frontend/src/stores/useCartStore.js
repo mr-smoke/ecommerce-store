@@ -2,8 +2,9 @@ import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
 
-export const useCartStore = create((set) => ({
+export const useCartStore = create((set, get) => ({
   cart: [],
+  total: 0,
   loading: false,
 
   getCartItems: async () => {
@@ -12,6 +13,7 @@ export const useCartStore = create((set) => ({
     try {
       const response = await axios.get("/cart");
       set({ cart: response.data });
+      get().cartTotal();
     } catch (error) {
       toast.error(error.response.data.error || "Failed to fetch cart items!");
     } finally {
@@ -36,6 +38,7 @@ export const useCartStore = create((set) => ({
         }
         return { cart: [...state.cart, { ...product, quantity: 1 }] };
       });
+      get().cartTotal();
       toast.success("Product added to cart!");
     } catch (error) {
       toast.error(
@@ -53,6 +56,7 @@ export const useCartStore = create((set) => ({
       set((state) => ({
         cart: state.cart.filter((item) => item._id !== productId),
       }));
+      get().cartTotal();
     } catch (error) {
       toast.error(
         error.response.data.error || "Failed to remove product from cart!"
@@ -71,10 +75,18 @@ export const useCartStore = create((set) => ({
           item._id === productId ? { ...item, quantity } : item
         ),
       }));
+      get().cartTotal();
     } catch (error) {
       toast.error(error.response.data.error || "Failed to update cart!");
     } finally {
       set({ loading: false });
     }
+  },
+  cartTotal: () => {
+    set({
+      total: get().cart.reduce((total, product) => {
+        return total + product.price * product.quantity;
+      }, 0),
+    });
   },
 }));

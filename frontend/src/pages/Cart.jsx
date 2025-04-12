@@ -9,7 +9,7 @@ import { useCartStore } from "../stores/useCartStore";
 import { useEffect } from "react";
 
 const Cart = () => {
-  const { loading, cart, removeFromCart, updateCart } = useCartStore();
+  const { loading, cart, removeFromCart, updateCart, total } = useCartStore();
 
   return (
     <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-40">
@@ -75,7 +75,7 @@ const Cart = () => {
             </div>
             <div className="flex justify-between border-t border-gray-700 py-2">
               <p className="font-bold">Total:</p>
-              <p className="font-bold text-emerald-400">$210</p>
+              <p className="font-bold text-emerald-400">${total}</p>
             </div>
             <button className="bg-emerald-600 hover:bg-emerald-700 py-2 rounded-lg transition duration-150 ease-in-out font-medium">
               Checkout
