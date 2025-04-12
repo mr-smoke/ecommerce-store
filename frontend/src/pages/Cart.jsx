@@ -9,7 +9,7 @@ import { useCartStore } from "../stores/useCartStore";
 import { useEffect } from "react";
 
 const Cart = () => {
-  const { loading, cart, removeFromCart } = useCartStore();
+  const { loading, cart, removeFromCart, updateCart } = useCartStore();
 
   return (
     <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-40">
@@ -33,11 +33,25 @@ const Cart = () => {
               </div>
               <div className="px-20">
                 <div className="flex justify-center gap-2">
-                  <button className="flex items-center text-lg  text-red-500">
+                  <button
+                    className="flex items-center text-lg  text-red-500"
+                    onClick={() => {
+                      if (product.quantity > 1) {
+                        updateCart(product._id, product.quantity - 1);
+                      } else {
+                        removeFromCart(product._id);
+                      }
+                    }}
+                  >
                     <LuCircleMinus />
                   </button>
                   <p className="text-xl">{product.quantity}</p>
-                  <button className="flex items-center text-lg text-green-500">
+                  <button
+                    className="flex items-center text-lg text-green-500"
+                    onClick={() =>
+                      updateCart(product._id, product.quantity + 1)
+                    }
+                  >
                     <LuCirclePlus />
                   </button>
                 </div>

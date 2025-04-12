@@ -53,11 +53,26 @@ export const useCartStore = create((set) => ({
       set((state) => ({
         cart: state.cart.filter((item) => item._id !== productId),
       }));
-      toast.success("Product removed from cart!");
     } catch (error) {
       toast.error(
         error.response.data.error || "Failed to remove product from cart!"
       );
+    } finally {
+      set({ loading: false });
+    }
+  },
+  updateCart: async (productId, quantity) => {
+    set({ loading: true });
+
+    try {
+      await axios.put(`/cart/update/${productId}`, { quantity });
+      set((state) => ({
+        cart: state.cart.map((item) =>
+          item._id === productId ? { ...item, quantity } : item
+        ),
+      }));
+    } catch (error) {
+      toast.error(error.response.data.error || "Failed to update cart!");
     } finally {
       set({ loading: false });
     }
