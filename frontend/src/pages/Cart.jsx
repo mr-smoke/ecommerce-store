@@ -9,40 +9,25 @@ import { useCartStore } from "../stores/useCartStore";
 import { useEffect } from "react";
 
 const Cart = () => {
-  const { loading, cart } = useCartStore();
-  const cartItems = [
-    {
-      id: 1,
-      name: "Product Name",
-      description: "Product Description",
-      image: "/images/products/1.jpg",
-      price: 100,
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Product Name",
-      description: "Product Description",
-      image: "/images/products/2.jpg",
-      price: 100,
-      quantity: 1,
-    },
-  ];
+  const { loading, cart, removeFromCart } = useCartStore();
 
   return (
     <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-40">
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="sm:w-3/4 flex flex-col gap-4">
-          {cartItems.map((product) => (
+          {cart.map((product) => (
             <div
               key={product.id}
               className="flex justify-center items-center p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm"
             >
-              <img src={product.image} alt="Product" className="w-24 h-24" />
+              <img src={product.photo} alt="Product" className="w-24 h-24" />
               <div className="flex flex-col gap-3 flex-1 pl-8">
                 <h2 className="font-bold">{product.name}</h2>
                 <p className="text-sm text-gray-400">{product.description}</p>
-                <button className="text-red-500 w-max">
+                <button
+                  className="text-red-500 w-max"
+                  onClick={() => removeFromCart(product._id)}
+                >
                   <LuTrash2 size={20} />
                 </button>
               </div>

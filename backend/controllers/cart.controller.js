@@ -23,7 +23,7 @@ export const addToCart = async (req, res) => {
 };
 
 export const removeFromCart = async (req, res) => {
-  const { productId } = req.body;
+  const productId = req.params.id;
 
   try {
     const user = req.user;

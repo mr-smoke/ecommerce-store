@@ -43,7 +43,7 @@ const Category = () => {
             </p>
             <button
               className="bg-emerald-600 hover:bg-emerald-700 text-white font- p-2 rounded-lg w-full transition duration-150 ease-in-out flex items-center justify-center gap-3"
-              onClick={() => addToCart(product._id)}
+              onClick={() => addToCart(product)}
             >
               <LuShoppingCart />
               Add to Cart
