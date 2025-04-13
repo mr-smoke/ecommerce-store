@@ -1,4 +1,5 @@
 import Coupon from "../models/coupon.model.js";
+import User from "../models/user.model.js";
 
 export const createCoupon = async (req, res) => {
   const { name, expiry, discount } = req.body;
@@ -47,6 +48,36 @@ export const validateCoupon = async (req, res) => {
     }
 
     res.json(coupon);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const addCouponToUser = async (req, res) => {
+  try {
+    const { name } = req.body;
+    const userId = req.user._id;
+
+    const coupon = await Coupon.findOne({ name });
+
+    if (!coupon) {
+      return res.status(404).json({ error: "Coupon not found" });
+    }
+
+    const user = await User.findById(userId);
+
+    const alreadyHasCoupon = user.coupons.some(
+      (c) => c.coupon.toString() === coupon._id.toString()
+    );
+
+    if (alreadyHasCoupon) {
+      return res.status(400).json({ error: "You already have this coupon" });
+    }
+
+    user.coupons.push(coupon._id);
+    await user.save();
+
+    res.json({ message: "Coupon added successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
