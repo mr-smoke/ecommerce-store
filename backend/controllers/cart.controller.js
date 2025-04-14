@@ -38,7 +38,6 @@ export const removeFromCart = async (req, res) => {
 
     res.status(201).json(user.cartItems);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

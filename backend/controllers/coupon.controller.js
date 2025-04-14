@@ -54,8 +54,9 @@ export const validateCoupon = async (req, res) => {
 };
 
 export const addCouponToUser = async (req, res) => {
+  const { name } = req.body;
+
   try {
-    const { name } = req.body;
     const userId = req.user._id;
 
     const coupon = await Coupon.findOne({ name });
@@ -78,6 +79,23 @@ export const addCouponToUser = async (req, res) => {
     await user.save();
 
     res.json({ message: "Coupon added successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getUserCoupons = async (req, res) => {
+  try {
+    const coupons = await Coupon.find({
+      _id: { $in: req.user.coupons },
+    });
+
+    const userCoupons = coupons.map((coupon) => {
+      const userCoupon = req.user.coupons.find((c) => c.id === coupon.id);
+      return { ...coupon.toJSON(), used: userCoupon.used };
+    });
+
+    res.json(userCoupons);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
