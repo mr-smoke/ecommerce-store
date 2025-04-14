@@ -100,3 +100,54 @@ export const getUserCoupons = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getCoupons = async (req, res) => {
+  try {
+    const coupons = await Coupon.find({}).sort({ createdAt: -1 });
+    res.json(coupons);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const deleteCoupon = async (req, res) => {
+  const couponId = req.params.id;
+
+  try {
+    const coupon = await Coupon.findById(couponId);
+
+    if (!coupon) {
+      return res.status(404).json({ error: "Coupon not found" });
+    }
+
+    await coupon.remove();
+
+    res.json({ message: "Coupon deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const updateCoupon = async (req, res) => {
+  const couponId = req.params.id;
+  const { name, expiry, discount, isActive } = req.body;
+
+  try {
+    const coupon = await Coupon.findById(couponId);
+
+    if (!coupon) {
+      return res.status(404).json({ error: "Coupon not found" });
+    }
+
+    coupon.name = name || coupon.name;
+    coupon.expiry = expiry || coupon.expiry;
+    coupon.discount = discount || coupon.discount;
+    coupon.isActive = isActive !== undefined ? isActive : coupon.isActive;
+
+    await coupon.save();
+
+    res.json(coupon);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
