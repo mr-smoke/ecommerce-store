@@ -8,6 +8,7 @@ import { useState } from "react";
 import Products from "../components/Products";
 import CreateProduct from "../components/CreateProduct";
 import Analytics from "../components/Analytics";
+import Coupons from "../components/Coupons";
 
 const tabs = [
   {
@@ -18,6 +19,11 @@ const tabs = [
   {
     id: "create",
     name: "Create Product",
+    icon: LuCirclePlus,
+  },
+  {
+    id: "coupons",
+    name: "Coupons",
     icon: LuCirclePlus,
   },
   {
@@ -53,6 +59,7 @@ const Dashboard = () => {
       {activeTab === "products" && <Products />}
       {activeTab === "create" && <CreateProduct />}
       {activeTab === "analytics" && <Analytics />}
+      {activeTab === "coupons" && <Coupons />}
     </main>
   );
 };
