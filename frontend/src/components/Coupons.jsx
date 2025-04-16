@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LuCircleCheckBig, LuSettings, LuTrash2 } from "react-icons/lu";
 import { Modal, ModalTrigger, ModalContent } from "./Modal";
+import UpdateCoupon from "./UpdateCoupon";
 
 const Coupons = () => {
   const [formData, setFormData] = useState({
@@ -114,7 +115,9 @@ const Coupons = () => {
                       <LuSettings />
                     </button>
                   </ModalTrigger>
-                  <ModalContent>Update Coupon</ModalContent>
+                  <ModalContent>
+                    <UpdateCoupon coupon={coupon} />
+                  </ModalContent>
                 </Modal>
                 <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
                   <LuTrash2 />
