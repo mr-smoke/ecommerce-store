@@ -1,7 +1,6 @@
 import { useState, createContext, useContext } from "react";
 
 const ModalContext = createContext();
-
 export const Modal = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -18,6 +17,8 @@ export const Modal = ({ children }) => {
     <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
   );
 };
+
+export const useModal = () => useContext(ModalContext);
 
 export const ModalTrigger = ({ children }) => {
   const { openModal } = useContext(ModalContext);

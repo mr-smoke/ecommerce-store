@@ -31,4 +31,21 @@ export const useCouponStore = create((set) => ({
       set({ loading: false });
     }
   },
+  updateCoupon: async (coupon) => {
+    set({ loading: true });
+
+    try {
+      const response = await axios.put(`/coupon/${coupon._id}`, coupon);
+      set((state) => ({
+        coupons: state.coupons.map((c) =>
+          c._id === coupon._id ? response.data : c
+        ),
+      }));
+      toast.success("Coupon updated successfully!");
+    } catch (error) {
+      toast.error(error.response.data.error || "Failed to update coupon!");
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));
