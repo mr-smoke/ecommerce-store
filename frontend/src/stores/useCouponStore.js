@@ -76,4 +76,19 @@ export const useCouponStore = create((set) => ({
       set({ loading: false });
     }
   },
+  addCouponToUser: async (coupon) => {
+    set({ loading: true });
+
+    try {
+      const response = await axios.post(`/coupon/${coupon._id}`);
+      set((state) => ({
+        userCoupons: [...state.userCoupons, { ...coupon, isUsed: false }],
+      }));
+      toast.success("Coupon added to user successfully!");
+    } catch (error) {
+      toast.error(error.response.data.error || "Failed to add coupon!");
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

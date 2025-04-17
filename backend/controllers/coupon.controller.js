@@ -54,12 +54,12 @@ export const validateCoupon = async (req, res) => {
 };
 
 export const addCouponToUser = async (req, res) => {
-  const { name } = req.body;
+  const couponId = req.params.id;
 
   try {
     const userId = req.user._id;
 
-    const coupon = await Coupon.findOne({ name });
+    const coupon = await Coupon.findById(couponId);
 
     if (!coupon) {
       return res.status(404).json({ error: "Coupon not found" });
@@ -78,7 +78,7 @@ export const addCouponToUser = async (req, res) => {
     user.coupons.push(coupon._id);
     await user.save();
 
-    res.json({ message: "Coupon added successfully" });
+    res.json({ message: "Coupon added to user successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
