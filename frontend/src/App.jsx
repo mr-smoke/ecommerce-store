@@ -9,11 +9,13 @@ import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useCartStore } from "./stores/useCartStore";
+import { useCouponStore } from "./stores/useCouponStore";
 import { useEffect } from "react";
 
 function App() {
   const { user, getUser, loading } = useUserStore();
   const { getCartItems } = useCartStore();
+  const { getUserCoupons } = useCouponStore();
 
   useEffect(() => {
     getUser();
@@ -24,6 +26,12 @@ function App() {
       getCartItems();
     }
   }, [user, getCartItems]);
+
+  useEffect(() => {
+    if (user) {
+      getUserCoupons();
+    }
+  }, [user, getUserCoupons]);
 
   if (loading) {
     return (

@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 
 export const useCouponStore = create((set) => ({
   coupons: [],
+  userCoupons: [],
   loading: false,
 
   getCoupons: async () => {
@@ -59,6 +60,18 @@ export const useCouponStore = create((set) => ({
       toast.success("Coupon deleted successfully!");
     } catch (error) {
       toast.error(error.response.data.error || "Failed to delete coupon!");
+    } finally {
+      set({ loading: false });
+    }
+  },
+  getUserCoupons: async () => {
+    set({ loading: true });
+
+    try {
+      const response = await axios.get("/coupon/user");
+      set({ userCoupons: response.data });
+    } catch (error) {
+      toast.error(error.response.data.error || "Failed to fetch coupons!");
     } finally {
       set({ loading: false });
     }
