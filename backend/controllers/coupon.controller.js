@@ -120,7 +120,7 @@ export const deleteCoupon = async (req, res) => {
       return res.status(404).json({ error: "Coupon not found" });
     }
 
-    await coupon.remove();
+    await Coupon.deleteOne({ _id: couponId });
 
     res.json({ message: "Coupon deleted successfully" });
   } catch (error) {

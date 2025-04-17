@@ -6,7 +6,7 @@ import UpdateCoupon from "./UpdateCoupon";
 import { useCouponStore } from "../stores/useCouponStore";
 
 const Coupons = () => {
-  const { coupons, getCoupons, loading } = useCouponStore();
+  const { coupons, getCoupons, deleteCoupon, loading } = useCouponStore();
 
   useEffect(() => {
     getCoupons();
@@ -78,7 +78,10 @@ const Coupons = () => {
                     <UpdateCoupon coupon={coupon} />
                   </ModalContent>
                 </Modal>
-                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
+                <button
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+                  onClick={() => deleteCoupon(coupon._id)}
+                >
                   <LuTrash2 />
                 </button>
               </td>

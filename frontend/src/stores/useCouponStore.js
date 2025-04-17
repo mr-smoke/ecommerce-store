@@ -48,4 +48,19 @@ export const useCouponStore = create((set) => ({
       set({ loading: false });
     }
   },
+  deleteCoupon: async (id) => {
+    set({ loading: true });
+
+    try {
+      await axios.delete(`/coupon/${id}`);
+      set((state) => ({
+        coupons: state.coupons.filter((coupon) => coupon._id !== id),
+      }));
+      toast.success("Coupon deleted successfully!");
+    } catch (error) {
+      toast.error(error.response.data.error || "Failed to delete coupon!");
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));
