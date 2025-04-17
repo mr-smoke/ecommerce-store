@@ -3,6 +3,7 @@ import {
   LuCirclePlus,
   LuShoppingBag,
   LuChartNoAxesCombined,
+  LuTicketPercent,
 } from "react-icons/lu";
 import { useState } from "react";
 import Products from "../components/Products";
@@ -24,7 +25,7 @@ const tabs = [
   {
     id: "coupons",
     name: "Coupons",
-    icon: LuCirclePlus,
+    icon: LuTicketPercent,
   },
   {
     id: "analytics",

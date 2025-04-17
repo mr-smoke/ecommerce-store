@@ -1,32 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LuCircleCheckBig, LuSettings, LuTrash2 } from "react-icons/lu";
 import { Modal, ModalTrigger, ModalContent } from "./Modal";
 import UpdateCoupon from "./UpdateCoupon";
+import { useCouponStore } from "../stores/useCouponStore";
 
 const Coupons = () => {
+  const { coupons, getCoupons, loading } = useCouponStore();
   const [formData, setFormData] = useState({
     name: "",
     discount: "",
     expiry: "",
   });
 
-  const loading = false;
-  const coupons = [
-    {
-      _id: "1",
-      name: "Summer Sale",
-      discount: 20,
-      expiry: "2023-12-31",
-      isActive: true,
-    },
-    {
-      _id: "2",
-      name: "Winter Sale",
-      discount: 15,
-      expiry: "2024-01-31",
-      isActive: false,
-    },
-  ];
+  useEffect(() => {
+    getCoupons();
+  }, [getCoupons]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -95,7 +83,13 @@ const Coupons = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 {coupon.discount}%
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">{coupon.expiry}</td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {new Date(coupon.expiry).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })}
+              </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <button
                   className={`text-white font-bold py-2 px-4 rounded transition-colors duration-200
