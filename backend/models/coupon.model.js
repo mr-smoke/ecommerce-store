@@ -25,6 +25,10 @@ const couponSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    isPromotional: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );

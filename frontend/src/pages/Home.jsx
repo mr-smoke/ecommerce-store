@@ -1,5 +1,27 @@
 import { Link } from "react-router-dom";
 import { categories } from "../lib/data";
+import Carousel from "../components/Carousel";
+
+const coupons = [
+  {
+    id: 1,
+    name: "10% off on Electronics",
+    code: "ELECTRO10",
+    expiryDate: "2023-12-31",
+  },
+  {
+    id: 2,
+    name: "20% off on Fashion",
+    code: "FASHION20",
+    expiryDate: "2023-11-30",
+  },
+  {
+    id: 3,
+    name: "15% off on Home Appliances",
+    code: "HOME15",
+    expiryDate: "2024-01-15",
+  },
+];
 
 const Home = () => {
   return (
@@ -30,6 +52,22 @@ const Home = () => {
             </div>
           </Link>
         ))}
+      </div>
+      <div className="pt-12 text-center">
+        <Carousel items={coupons}>
+          {coupons.map((coupon) => (
+            <div
+              key={coupon.id}
+              className="bg-white rounded-lg shadow-lg p-4 m-2"
+            >
+              <h3 className="text-lg font-semibold">{coupon.name}</h3>
+              <p className="text-gray-600">Code: {coupon.code}</p>
+              <p className="text-gray-600">
+                Expires on: {new Date(coupon.expiryDate).toLocaleDateString()}
+              </p>
+            </div>
+          ))}
+        </Carousel>
       </div>
     </main>
   );

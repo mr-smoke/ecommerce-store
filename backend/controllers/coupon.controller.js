@@ -103,7 +103,9 @@ export const getUserCoupons = async (req, res) => {
 
 export const getCoupons = async (req, res) => {
   try {
-    const coupons = await Coupon.find({}).sort({ createdAt: -1 });
+    const coupons = await Coupon.find({ isPromotional: true }).sort({
+      createdAt: -1,
+    });
     res.json(coupons);
   } catch (error) {
     res.status(500).json({ error: error.message });
