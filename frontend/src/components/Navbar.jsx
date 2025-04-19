@@ -16,7 +16,7 @@ const Navbar = () => {
   const isAdmin = user && user.role === "admin";
 
   return (
-    <header className="bg-gray-900 shadow-lg fixed w-full">
+    <header className="bg-gray-900 shadow-lg fixed w-full z-10">
       <div className="container mx-auto flex items-center justify-between flex-wrap p-6">
         <Link to="/" className="text-3xl font-bold text-emerald-400">
           E-Commerce
