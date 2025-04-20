@@ -68,7 +68,7 @@ export const addCouponToUser = async (req, res) => {
     const user = await User.findById(userId);
 
     const alreadyHasCoupon = user.coupons.some(
-      (c) => c.coupon.toString() === coupon._id.toString()
+      (c) => c._id.toString() === coupon._id.toString()
     );
 
     if (alreadyHasCoupon) {

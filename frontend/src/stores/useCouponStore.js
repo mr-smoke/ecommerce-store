@@ -36,7 +36,7 @@ export const useCouponStore = create((set) => ({
     set({ loading: true });
 
     try {
-      const response = await axios.put(`/coupon/${coupon._id}`, coupon);
+      const response = await axios.put(`/coupon/update/${coupon._id}`, coupon);
       set((state) => ({
         coupons: state.coupons.map((c) =>
           c._id === coupon._id ? response.data : c
@@ -53,7 +53,7 @@ export const useCouponStore = create((set) => ({
     set({ loading: true });
 
     try {
-      await axios.delete(`/coupon/${id}`);
+      await axios.delete(`/coupon/delete/${id}`);
       set((state) => ({
         coupons: state.coupons.filter((coupon) => coupon._id !== id),
       }));
@@ -80,7 +80,7 @@ export const useCouponStore = create((set) => ({
     set({ loading: true });
 
     try {
-      const response = await axios.post(`/coupon/${coupon._id}`);
+      const response = await axios.post(`/coupon/add/${coupon._id}`);
       set((state) => ({
         userCoupons: [...state.userCoupons, { ...coupon, isUsed: false }],
       }));

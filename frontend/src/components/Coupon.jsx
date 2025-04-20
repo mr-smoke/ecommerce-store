@@ -1,4 +1,8 @@
+import { useCouponStore } from "../stores/useCouponStore";
+
 const Coupon = ({ coupon }) => {
+  const { addCouponToUser, loading } = useCouponStore();
+
   return (
     <>
       <div
@@ -19,7 +23,11 @@ const Coupon = ({ coupon }) => {
                 day: "2-digit",
               })}
             </p>
-            <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2">
+            <button
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2"
+              onClick={() => addCouponToUser(coupon)}
+              disabled={loading}
+            >
               Get Coupon
             </button>
           </div>
