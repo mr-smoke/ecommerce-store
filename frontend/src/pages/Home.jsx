@@ -6,11 +6,13 @@ import { useEffect } from "react";
 import { useCouponStore } from "../stores/useCouponStore";
 
 const Home = () => {
-  const { coupons, getCoupons, loading } = useCouponStore();
+  const { coupons, getCoupons, loading, addCouponToUser } = useCouponStore();
 
   useEffect(() => {
     getCoupons();
   }, [getCoupons]);
+
+  const activeCoupons = coupons.filter((coupon) => coupon.isActive);
 
   return (
     <main className="max-w-6xl mx-auto pt-24 px-2">
@@ -44,12 +46,23 @@ const Home = () => {
         </div>
       </section>
       <section className="py-12">
-        <Carousel length={coupons.filter((coupon) => coupon.isActivate).length}>
-          {coupons
-            .filter((coupon) => coupon.isActive)
-            .map((coupon) => (
-              <Coupon key={coupon.id} coupon={coupon} />
-            ))}
+        <Carousel length={activeCoupons.length}>
+          {activeCoupons.map((coupon) => (
+            <div
+              key={coupon._id}
+              className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"
+            >
+              <Coupon coupon={coupon}>
+                <button
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2"
+                  onClick={() => addCouponToUser(coupon)}
+                  disabled={loading}
+                >
+                  Claim Coupon
+                </button>
+              </Coupon>
+            </div>
+          ))}
         </Carousel>
       </section>
     </main>

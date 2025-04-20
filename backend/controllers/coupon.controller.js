@@ -93,12 +93,15 @@ export const getUserCoupons = async (req, res) => {
 
     const coupons = await Coupon.find({
       _id: { $in: req.user.coupons },
+      isActive: true,
     });
 
-    const userCoupons = coupons.map((coupon) => {
-      const userCoupon = req.user.coupons.find((c) => c.id === coupon.id);
-      return { ...coupon.toJSON(), used: userCoupon.used };
-    });
+    const userCoupons = coupons
+      .map((coupon) => {
+        const userCoupon = req.user.coupons.find((c) => c.id === coupon.id);
+        return { ...coupon.toJSON(), used: userCoupon.used };
+      })
+      .filter((coupon) => !coupon.used);
 
     res.json(userCoupons);
   } catch (error) {

@@ -6,10 +6,14 @@ import {
   LuArrowRight,
 } from "react-icons/lu";
 import { useCartStore } from "../stores/useCartStore";
+import { useCouponStore } from "../stores/useCouponStore";
 import { useEffect } from "react";
+import { Modal, ModalTrigger, ModalContent } from "../components/Modal";
+import Coupon from "../components/Coupon";
 
 const Cart = () => {
   const { loading, cart, removeFromCart, updateCart, total } = useCartStore();
+  const { userCoupons } = useCouponStore();
 
   return (
     <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-40">
@@ -101,20 +105,44 @@ const Cart = () => {
           <div className="flex flex-col gap-4 p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm">
             <div>
               <h2 className="text-2xl text-emerald-400 font-bold">
-                Promo Code
+                Use Coupon
               </h2>
               <p className="text-gray-400 text-xs pt-1">
-                Enter your promo code below to receive a discount
+                Apply a coupon code to get a discount on your order.
               </p>
             </div>
-            <input
-              type="text"
-              placeholder="Enter promo code"
-              className="bg-gray-700 text-gray-400 p-2 rounded-lg placeholder:text-sm"
-            />
-            <button className="bg-emerald-600 hover:bg-emerald-700 py-2 rounded-lg transition duration-150 ease-in-out font-medium">
-              Apply
-            </button>
+            <p className="bg-gray-700 text-gray-400 p-2 rounded-lg">
+              Select a coupon
+            </p>
+            <Modal>
+              <ModalTrigger>
+                <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 w-full">
+                  View Coupons
+                </button>
+              </ModalTrigger>
+              <ModalContent>
+                {userCoupons.length > 0 ? (
+                  <div className="flex flex-col gap-4">
+                    <h2 className="text-2xl text-emerald-400 font-bold">
+                      Available Coupons
+                    </h2>
+                    {userCoupons.map((coupon) => (
+                      <Coupon key={coupon._id} coupon={coupon}>
+                        <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2">
+                          Apply Coupon
+                        </button>
+                      </Coupon>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm">
+                    <h2 className="text-2xl text-gray-400 font-bold">
+                      No coupons available
+                    </h2>
+                  </div>
+                )}
+              </ModalContent>
+            </Modal>
           </div>
         </div>
       </div>
