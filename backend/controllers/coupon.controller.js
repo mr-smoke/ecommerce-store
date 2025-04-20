@@ -86,6 +86,11 @@ export const addCouponToUser = async (req, res) => {
 
 export const getUserCoupons = async (req, res) => {
   try {
+    await Coupon.updateMany(
+      { expiry: { $lt: new Date() } },
+      { $set: { isActive: false } }
+    );
+
     const coupons = await Coupon.find({
       _id: { $in: req.user.coupons },
     });
@@ -132,7 +137,7 @@ export const deleteCoupon = async (req, res) => {
 
 export const updateCoupon = async (req, res) => {
   const couponId = req.params.id;
-  const { name, expiry, discount, isActive } = req.body;
+  const { name, expiry, discount } = req.body;
 
   try {
     const coupon = await Coupon.findById(couponId);
@@ -144,7 +149,7 @@ export const updateCoupon = async (req, res) => {
     coupon.name = name || coupon.name;
     coupon.expiry = expiry || coupon.expiry;
     coupon.discount = discount || coupon.discount;
-    coupon.isActive = isActive !== undefined ? isActive : coupon.isActive;
+    coupon.isActive = true;
 
     await coupon.save();
 

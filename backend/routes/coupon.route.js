@@ -16,7 +16,7 @@ router.post("/create", protectRoute, adminRoute, createCoupon);
 router.post("/validate", protectRoute, validateCoupon);
 router.post("/add", protectRoute, addCouponToUser);
 router.get("/user", protectRoute, getUserCoupons);
-router.get("/", protectRoute, adminRoute, getCoupons);
+router.get("/", getCoupons);
 router.delete("/:id", protectRoute, adminRoute, deleteCoupon);
 router.put("/:id", protectRoute, adminRoute, updateCoupon);
 

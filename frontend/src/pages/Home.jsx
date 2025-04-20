@@ -2,29 +2,16 @@ import { Link } from "react-router-dom";
 import { categories } from "../lib/data";
 import Carousel from "../components/Carousel";
 import Coupon from "../components/Coupon";
-
-const coupons = [
-  {
-    id: 1,
-    code: "ELECTRO10",
-    expiryDate: "2023-12-31",
-    discount: 10,
-  },
-  {
-    id: 2,
-    code: "FASHION20",
-    expiryDate: "2023-11-30",
-    discount: 20,
-  },
-  {
-    id: 3,
-    code: "HOME15",
-    expiryDate: "2024-01-15",
-    discount: 15,
-  },
-];
+import { useEffect } from "react";
+import { useCouponStore } from "../stores/useCouponStore";
 
 const Home = () => {
+  const { coupons, getCoupons, loading } = useCouponStore();
+
+  useEffect(() => {
+    getCoupons();
+  }, [getCoupons]);
+
   return (
     <main className="max-w-6xl mx-auto pt-24 px-2">
       <section>
@@ -57,10 +44,12 @@ const Home = () => {
         </div>
       </section>
       <section className="py-12">
-        <Carousel length={coupons.length}>
-          {coupons.map((coupon) => (
-            <Coupon key={coupon.id} coupon={coupon} />
-          ))}
+        <Carousel length={coupons.filter((coupon) => coupon.isActivate).length}>
+          {coupons
+            .filter((coupon) => coupon.isActive)
+            .map((coupon) => (
+              <Coupon key={coupon.id} coupon={coupon} />
+            ))}
         </Carousel>
       </section>
     </main>
