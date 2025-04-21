@@ -27,10 +27,10 @@ export const createCoupon = async (req, res) => {
 };
 
 export const validateCoupon = async (req, res) => {
-  const { name } = req.body;
+  const couponId = req.params.id;
 
   try {
-    const coupon = await Coupon.findOne({ name });
+    const coupon = await Coupon.findById(couponId);
 
     if (!coupon) {
       return res.status(400).json({ error: "Coupon not found" });

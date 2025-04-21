@@ -4,6 +4,7 @@ import {
   LuCirclePlus,
   LuCircleMinus,
   LuArrowRight,
+  LuBadgeX,
 } from "react-icons/lu";
 import { useCartStore } from "../stores/useCartStore";
 import { useCouponStore } from "../stores/useCouponStore";
@@ -12,7 +13,16 @@ import { Modal, ModalTrigger, ModalContent } from "../components/Modal";
 import Coupon from "../components/Coupon";
 
 const Cart = () => {
-  const { loading, cart, removeFromCart, updateCart, total } = useCartStore();
+  const {
+    cart,
+    removeFromCart,
+    updateCart,
+    applyCoupon,
+    coupon,
+    total,
+    subtotal,
+    loading,
+  } = useCartStore();
   const { userCoupons } = useCouponStore();
 
   return (
@@ -81,15 +91,15 @@ const Cart = () => {
             </h2>
             <div className="flex justify-between">
               <p className="text-gray-400">Subtotal:</p>
-              <p className="font-semibold">$200</p>
+              <p className="font-semibold">${subtotal.toFixed(1)}</p>
             </div>
             <div className="flex justify-between">
-              <p className="text-gray-400">Shipping:</p>
-              <p className="font-semibold">$10</p>
+              <p className="text-gray-400">Discount:</p>
+              <p className="font-semibold">${(subtotal - total).toFixed(1)}</p>
             </div>
             <div className="flex justify-between border-t border-gray-700 py-2">
               <p className="font-bold">Total:</p>
-              <p className="font-bold text-emerald-400">${total}</p>
+              <p className="font-bold text-emerald-400">${total.toFixed(1)}</p>
             </div>
             <button className="bg-emerald-600 hover:bg-emerald-700 py-2 rounded-lg transition duration-150 ease-in-out font-medium">
               Checkout
@@ -111,8 +121,18 @@ const Cart = () => {
                 Apply a coupon code to get a discount on your order.
               </p>
             </div>
-            <p className="bg-gray-700 text-gray-400 p-2 rounded-lg">
-              Select a coupon
+            <p className="bg-gray-700 text-gray-400 p-2 rounded-lg pointer-events-none">
+              {coupon ? (
+                <>
+                  <span className="text-emerald-400 font-semibold">
+                    {coupon.name} - {coupon.discount}% off
+                  </span>
+                </>
+              ) : (
+                <span className="text-gray-400 font-semibold">
+                  No coupon applied
+                </span>
+              )}
             </p>
             <Modal>
               <ModalTrigger>
@@ -128,7 +148,12 @@ const Cart = () => {
                     </h2>
                     {userCoupons.map((coupon) => (
                       <Coupon key={coupon._id} coupon={coupon}>
-                        <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2">
+                        <button
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2"
+                          onClick={() => {
+                            applyCoupon(coupon._id);
+                          }}
+                        >
                           Apply Coupon
                         </button>
                       </Coupon>

@@ -5,6 +5,8 @@ import { toast } from "react-hot-toast";
 export const useCartStore = create((set, get) => ({
   cart: [],
   total: 0,
+  subtotal: 0,
+  coupon: null,
   loading: false,
 
   getCartItems: async () => {
@@ -83,10 +85,26 @@ export const useCartStore = create((set, get) => ({
     }
   },
   cartTotal: () => {
-    set({
-      total: get().cart.reduce((total, product) => {
-        return total + product.price * product.quantity;
-      }, 0),
-    });
+    const { cart, coupon } = get();
+    const subtotal = cart.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+    let total = subtotal;
+
+    if (coupon) {
+      total -= (subtotal * coupon.discount) / 100;
+    }
+    set({ subtotal, total });
+  },
+  applyCoupon: async (couponId) => {
+    try {
+      const response = await axios.post(`/coupon/validate/${couponId}`);
+      set({ coupon: response.data });
+      get().cartTotal();
+      toast.success("Coupon applied successfully!");
+    } catch (error) {
+      toast.error(error.response.data.error || "Failed to apply coupon!");
+    }
   },
 }));
