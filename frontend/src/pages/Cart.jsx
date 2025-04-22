@@ -18,6 +18,7 @@ const Cart = () => {
     removeFromCart,
     updateCart,
     applyCoupon,
+    removeCoupon,
     coupon,
     total,
     subtotal,
@@ -168,6 +169,17 @@ const Cart = () => {
                 )}
               </ModalContent>
             </Modal>
+            {coupon && (
+              <button
+                className="text-red-500 underline font-medium inline-flex items-center justify-center gap-1 text-xs w-max self-center"
+                onClick={() => {
+                  removeCoupon();
+                }}
+              >
+                Remove Coupon
+                <LuBadgeX />
+              </button>
+            )}
           </div>
         </div>
       </div>
