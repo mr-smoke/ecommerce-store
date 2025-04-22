@@ -22,14 +22,18 @@ export const createCheckoutSession = async (req, res) => {
 
     const line_items = products.map((product) => {
       const price = product.price * 100;
-      totalPrice += price;
+      totalPrice += price * product.quantity;
 
       return {
         price_data: {
           currency: "usd",
           product_data: {
             name: product.name,
-            images: [product.photo],
+            images: [
+              product.photo && product.photo.startsWith("http")
+                ? product.photo
+                : "https://via.placeholder.com/150",
+            ],
           },
           unit_amount: price,
         },
@@ -53,7 +57,7 @@ export const createCheckoutSession = async (req, res) => {
       line_items,
       mode: "payment",
       success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.CLIENT_URL}/cart`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,
       discounts: coupon
         ? [{ coupon: await createStripeCoupon(coupon.discount) }]
         : [],
@@ -70,9 +74,9 @@ export const createCheckoutSession = async (req, res) => {
       },
     });
 
-    res.status(200).json({ session });
+    res.status(200).json({ id: session.id });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -101,8 +105,8 @@ export const checkoutSuccess = async (req, res) => {
       return res.status(201).json({ message: "Payment successful" });
     }
 
-    res.status(400).json({ message: "Payment failed" });
+    res.status(400).json({ error: "Payment failed" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
