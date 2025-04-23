@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Category from "./pages/Category";
 import Cart from "./pages/Cart";
+import PurchaseSuccess from "./pages/PurchaseSuccess";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
@@ -90,6 +91,7 @@ function App() {
             path="/cart"
             element={user ? <Cart /> : <Navigate to="/login" />}
           />
+          <Route path="/success" element={<PurchaseSuccess />} />
         </Routes>
       </div>
       <Toaster />
