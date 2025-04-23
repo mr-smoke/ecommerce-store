@@ -94,16 +94,18 @@ export const checkoutSuccess = async (req, res) => {
         return res.status(200).json({ order: existingOrder });
       }
 
-      if (session.metadata.coupon) {
-        const user = await User.findById(session.metadata.userId);
+      const user = await User.findById(session.metadata.userId);
 
+      if (session.metadata.coupon) {
         user.coupons.map((coupon) => {
           if (coupon._id.toString() === session.metadata.coupon) {
             coupon.used = true;
           }
         });
-        await user.save();
       }
+
+      user.cartItems = [];
+      await user.save();
 
       const products = JSON.parse(session.metadata.products);
 
@@ -120,7 +122,7 @@ export const checkoutSuccess = async (req, res) => {
 
       await order.save();
 
-      return res.status(201).json({ order });
+      return res.status(201).json({ order, coupon: session.metadata.coupon });
     }
 
     res.status(400).json({ error: "Payment failed" });

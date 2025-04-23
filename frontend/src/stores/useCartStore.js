@@ -84,6 +84,9 @@ export const useCartStore = create((set, get) => ({
       set({ loading: false });
     }
   },
+  clearCart: () => {
+    set({ cart: [], total: 0, subtotal: 0, coupon: null });
+  },
   cartTotal: () => {
     const { cart, coupon } = get();
     const subtotal = cart.reduce(

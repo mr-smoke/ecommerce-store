@@ -91,4 +91,11 @@ export const useCouponStore = create((set) => ({
       set({ loading: false });
     }
   },
+  updateUserCoupon: async (couponId) => {
+    set((state) => ({
+      userCoupons: state.userCoupons.map((coupon) =>
+        coupon._id === couponId ? { ...coupon, isUsed: true } : coupon
+      ),
+    }));
+  },
 }));

@@ -7,11 +7,15 @@ import {
   LuPackageX,
 } from "react-icons/lu";
 import axios from "../lib/axios";
+import { useCouponStore } from "../stores/useCouponStore";
+import { useCartStore } from "../stores/useCartStore";
 
 const PurchaseSuccess = () => {
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState(null);
   const [order, setOrder] = useState(null);
+  const { updateUserCoupon } = useCouponStore();
+  const { clearCart } = useCartStore();
 
   useEffect(() => {
     const checkPaymentStatus = async (sessionId) => {
@@ -19,7 +23,11 @@ const PurchaseSuccess = () => {
         const response = await axios.post(
           `/payment/checkout-success/${sessionId}`
         );
-        setOrder(response.data);
+        setOrder(response.data.order);
+        clearCart();
+        if (response.data.coupon) {
+          updateUserCoupon(response.data.coupon);
+        }
       } catch (error) {
         setError(
           error.response.data.error || "An error occurred. Please try again."
@@ -88,7 +96,7 @@ const PurchaseSuccess = () => {
           <input
             type="text"
             className="bg-gray-700 text-gray-300 w-full outline-none"
-            placeholder={"Order ID: " + order?.order._id}
+            placeholder={"Order ID: " + order?._id}
             readOnly
           />
         </div>
