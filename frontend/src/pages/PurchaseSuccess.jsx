@@ -11,18 +11,19 @@ import axios from "../lib/axios";
 const PurchaseSuccess = () => {
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState(null);
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
     const checkPaymentStatus = async (sessionId) => {
       try {
-        const response = await axios.post(`/payment/${sessionId}`);
-        if (response.data.status === "succeeded") {
-          setIsProcessing(false);
-        } else {
-          setError("Payment not successful. Please try again.");
-        }
-      } catch (err) {
-        setError("An error occurred while checking payment status.");
+        const response = await axios.post(
+          `/payment/checkout-success/${sessionId}`
+        );
+        setOrder(response.data);
+      } catch (error) {
+        setError(
+          error.response.data.error || "An error occurred. Please try again."
+        );
       } finally {
         setIsProcessing(false);
       }
@@ -31,6 +32,7 @@ const PurchaseSuccess = () => {
     const sessionId = new URLSearchParams(window.location.search).get(
       "session_id"
     );
+
     if (sessionId) {
       checkPaymentStatus(sessionId);
     } else {
@@ -50,7 +52,7 @@ const PurchaseSuccess = () => {
   if (error) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="bg-gray-900 shadow p-10 rounded-lg flex flex-col items-center gap-4 sm:w-96">
+        <div className="bg-gray-900 shadow p-10 rounded-lg flex flex-col items-center gap-4 sm:w-96 break-all">
           <LuPackageX className="text-red-500" size={70} />
           <h1 className="text-4xl font-extrabold text-red-500 text-center">
             Payment Failed
@@ -75,7 +77,6 @@ const PurchaseSuccess = () => {
     <div className="flex items-center justify-center h-screen">
       <div className="bg-gray-900 shadow p-10 rounded-lg flex flex-col items-center gap-4 sm:w-96">
         <LuPackageCheck className="text-emerald-400" size={70} />
-
         <h1 className="text-4xl font-extrabold text-emerald-400 text-center">
           Purchase Successful
         </h1>
@@ -87,7 +88,7 @@ const PurchaseSuccess = () => {
           <input
             type="text"
             className="bg-gray-700 text-gray-300 w-full outline-none"
-            placeholder="Order ID: 1234567890"
+            placeholder={"Order ID: " + order?.order._id}
             readOnly
           />
         </div>

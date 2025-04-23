@@ -16,7 +16,7 @@ const OrderSummary = () => {
 
     const response = await axios.post("/payment/create-checkout-session", {
       products: cart,
-      couponName: coupon ? coupon.name : null,
+      couponId: coupon ? coupon._id : null,
     });
 
     const session = await response.data;

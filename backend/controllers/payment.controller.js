@@ -1,5 +1,7 @@
 import { stripe } from "../lib/stripe.js";
 import Coupon from "../models/coupon.model.js";
+import Order from "../models/order.model.js";
+import User from "../models/user.model.js";
 
 export const createStripeCoupon = async (discount) => {
   const coupon = await stripe.coupons.create({
@@ -11,7 +13,7 @@ export const createStripeCoupon = async (discount) => {
 };
 
 export const createCheckoutSession = async (req, res) => {
-  const { products, couponName } = req.body;
+  const { products, couponId } = req.body;
 
   try {
     if (!products || !products.length) {
@@ -43,8 +45,8 @@ export const createCheckoutSession = async (req, res) => {
 
     let coupon = null;
 
-    if (couponName) {
-      coupon = await Coupon.findOne({ name: couponName });
+    if (couponId) {
+      coupon = await Coupon.findById(couponId);
 
       if (coupon) {
         const discount = (coupon.discount / 100) * totalPrice;
@@ -63,7 +65,7 @@ export const createCheckoutSession = async (req, res) => {
         : [],
       metadata: {
         userId: req.user._id.toString(),
-        coupon: couponName || "",
+        coupon: couponId || "",
         products: JSON.stringify(
           products.map((product) => ({
             id: product._id,
@@ -81,12 +83,28 @@ export const createCheckoutSession = async (req, res) => {
 };
 
 export const checkoutSuccess = async (req, res) => {
-  const { sessionId } = req.body;
+  const sessionId = req.params.id;
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status === "paid") {
+      const existingOrder = await Order.findOne({ stripeSessionId: sessionId });
+      if (existingOrder) {
+        return res.status(200).json({ order: existingOrder });
+      }
+
+      if (session.metadata.coupon) {
+        const user = await User.findById(session.metadata.userId);
+
+        user.coupons.map((coupon) => {
+          if (coupon._id.toString() === session.metadata.coupon) {
+            coupon.used = true;
+          }
+        });
+        await user.save();
+      }
+
       const products = JSON.parse(session.metadata.products);
 
       const order = new Order({
@@ -102,7 +120,7 @@ export const checkoutSuccess = async (req, res) => {
 
       await order.save();
 
-      return res.status(201).json({ message: "Payment successful" });
+      return res.status(201).json({ order });
     }
 
     res.status(400).json({ error: "Payment failed" });
