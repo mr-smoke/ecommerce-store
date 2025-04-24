@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   LuArrowRight,
@@ -14,7 +14,7 @@ const PurchaseSuccess = () => {
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState(null);
   const [order, setOrder] = useState(null);
-  const { updateUserCoupon } = useCouponStore();
+  const { updateUserCoupon, addCouponToUserLocally } = useCouponStore();
   const { clearCart } = useCartStore();
 
   useEffect(() => {
@@ -25,8 +25,11 @@ const PurchaseSuccess = () => {
         );
         setOrder(response.data.order);
         clearCart();
-        if (response.data.coupon) {
-          updateUserCoupon(response.data.coupon);
+        if (response.data.usedCoupon) {
+          updateUserCoupon(response.data.usedCoupon);
+        }
+        if (response.data.newCoupon) {
+          addCouponToUserLocally(response.data.newCoupon);
         }
       } catch (error) {
         setError(
@@ -47,7 +50,7 @@ const PurchaseSuccess = () => {
       setError("No session ID provided. Please try again.");
       setIsProcessing(false);
     }
-  }, []);
+  }, [clearCart, updateUserCoupon, addCouponToUserLocally]);
 
   if (isProcessing) {
     return (

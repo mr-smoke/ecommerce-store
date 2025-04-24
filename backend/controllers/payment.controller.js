@@ -3,13 +3,54 @@ import Coupon from "../models/coupon.model.js";
 import Order from "../models/order.model.js";
 import User from "../models/user.model.js";
 
-export const createStripeCoupon = async (discount) => {
+const createStripeCoupon = async (discount) => {
   const coupon = await stripe.coupons.create({
     percent_off: discount,
     duration: "once",
   });
 
   return coupon.id;
+};
+
+const createNewCoupon = async (user, totalPrice) => {
+  let discount = 0;
+
+  switch (true) {
+    case totalPrice > 5000:
+      discount = 50;
+      break;
+    case totalPrice > 4000:
+      discount = 40;
+      break;
+    case totalPrice > 3000:
+      discount = 30;
+      break;
+    case totalPrice > 2000:
+      discount = 20;
+      break;
+    default:
+      discount = 10;
+  }
+
+  const newCoupon = await Coupon.create({
+    name:
+      "PROMO" +
+      discount +
+      Math.random().toString(36).substring(2, 7).toUpperCase(),
+    discount,
+    expiry: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+    isPromotional: false,
+  });
+
+  await newCoupon.save();
+
+  console.log("five", user.__v);
+  user.coupons.push(newCoupon._id);
+  console.log("six", user.__v);
+  await user.save({ validateModifiedOnly: true });
+  console.log("seven", user.__v);
+
+  return newCoupon;
 };
 
 export const createCheckoutSession = async (req, res) => {
@@ -84,6 +125,7 @@ export const createCheckoutSession = async (req, res) => {
 
 export const checkoutSuccess = async (req, res) => {
   const sessionId = req.params.id;
+  const user = req.user;
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
@@ -94,8 +136,7 @@ export const checkoutSuccess = async (req, res) => {
         return res.status(200).json({ order: existingOrder });
       }
 
-      const user = await User.findById(session.metadata.userId);
-
+      console.log("first", user.__v);
       if (session.metadata.coupon) {
         user.coupons.map((coupon) => {
           if (coupon._id.toString() === session.metadata.coupon) {
@@ -103,9 +144,13 @@ export const checkoutSuccess = async (req, res) => {
           }
         });
       }
+      console.log("two", user.__v);
 
       user.cartItems = [];
-      await user.save();
+      console.log("three", user.__v);
+
+      await user.save({ validateModifiedOnly: true });
+      console.log("four", user.__v);
 
       const products = JSON.parse(session.metadata.products);
 
@@ -122,7 +167,16 @@ export const checkoutSuccess = async (req, res) => {
 
       await order.save();
 
-      return res.status(201).json({ order, coupon: session.metadata.coupon });
+      if (session.amount_total > 1000) {
+        const newCoupon = await createNewCoupon(user, session.amount_total);
+        return res
+          .status(201)
+          .json({ order, usedCoupon: session.metadata.coupon, newCoupon });
+      }
+
+      return res
+        .status(201)
+        .json({ order, usedCoupon: session.metadata.coupon });
     }
 
     res.status(400).json({ error: "Payment failed" });

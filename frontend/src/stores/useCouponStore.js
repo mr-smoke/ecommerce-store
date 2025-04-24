@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
 
-export const useCouponStore = create((set) => ({
+export const useCouponStore = create((set, get) => ({
   coupons: [],
   userCoupons: [],
   loading: false,
@@ -93,9 +93,14 @@ export const useCouponStore = create((set) => ({
   },
   updateUserCoupon: async (couponId) => {
     set((state) => ({
-      userCoupons: state.userCoupons.map((coupon) =>
-        coupon._id === couponId ? { ...coupon, isUsed: true } : coupon
+      userCoupons: state.userCoupons.filter(
+        (coupon) => coupon._id !== couponId
       ),
+    }));
+  },
+  addCouponToUserLocally: (coupon) => {
+    set((state) => ({
+      userCoupons: [...state.userCoupons, { ...coupon, isUsed: false }],
     }));
   },
 }));
