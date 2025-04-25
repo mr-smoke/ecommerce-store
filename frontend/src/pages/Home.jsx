@@ -4,9 +4,21 @@ import Carousel from "../components/Carousel";
 import Coupon from "../components/Coupon";
 import { useEffect } from "react";
 import { useCouponStore } from "../stores/useCouponStore";
+import { useUserStore } from "../stores/useUserStore";
+import { useCartStore } from "../stores/useCartStore";
 
 const Home = () => {
-  const { coupons, getCoupons, loading, addCouponToUser } = useCouponStore();
+  const { coupons, getCoupons, loading, addCouponToUser, getUserCoupons } =
+    useCouponStore();
+  const { user } = useUserStore();
+  const { getCartItems } = useCartStore();
+
+  useEffect(() => {
+    if (user) {
+      getCartItems();
+      getUserCoupons();
+    }
+  }, [user]);
 
   useEffect(() => {
     getCoupons();

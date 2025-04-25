@@ -15,24 +15,10 @@ import { useEffect } from "react";
 
 function App() {
   const { user, getUser, loading } = useUserStore();
-  const { getCartItems } = useCartStore();
-  const { getUserCoupons } = useCouponStore();
 
   useEffect(() => {
     getUser();
-  }, [getUser]);
-
-  useEffect(() => {
-    if (user) {
-      getCartItems();
-    }
-  }, [user, getCartItems]);
-
-  useEffect(() => {
-    if (user) {
-      getUserCoupons();
-    }
-  }, [user, getUserCoupons]);
+  }, []);
 
   if (loading) {
     return (
