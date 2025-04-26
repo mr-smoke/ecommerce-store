@@ -44,11 +44,8 @@ const createNewCoupon = async (user, totalPrice) => {
 
   await newCoupon.save();
 
-  console.log("five", user.__v);
   user.coupons.push(newCoupon._id);
-  console.log("six", user.__v);
   await user.save({ validateModifiedOnly: true });
-  console.log("seven", user.__v);
 
   return newCoupon;
 };
@@ -136,7 +133,6 @@ export const checkoutSuccess = async (req, res) => {
         return res.status(200).json({ order: existingOrder });
       }
 
-      console.log("first", user.__v);
       if (session.metadata.coupon) {
         user.coupons.map((coupon) => {
           if (coupon._id.toString() === session.metadata.coupon) {
@@ -144,13 +140,9 @@ export const checkoutSuccess = async (req, res) => {
           }
         });
       }
-      console.log("two", user.__v);
 
       user.cartItems = [];
-      console.log("three", user.__v);
-
       await user.save({ validateModifiedOnly: true });
-      console.log("four", user.__v);
 
       const products = JSON.parse(session.metadata.products);
 

@@ -14,13 +14,22 @@ import { useCouponStore } from "./stores/useCouponStore";
 import { useEffect } from "react";
 
 function App() {
-  const { user, getUser, loading } = useUserStore();
+  const { user, getUser, checkingAuth } = useUserStore();
+  const { getUserCoupons, userCoupons } = useCouponStore();
+  const { getCartItems, cart } = useCartStore();
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
-  if (loading) {
+  useEffect(() => {
+    if (user) {
+      getCartItems();
+      getUserCoupons();
+    }
+  }, [user, getCartItems, getUserCoupons]);
+
+  if (checkingAuth) {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
         <svg
