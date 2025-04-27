@@ -29,6 +29,10 @@ const Carousel = ({ length, children }) => {
   const isStartDisabled = currentIndex === 0;
   const isEndDisabled = currentIndex >= length - itemsPerPage;
 
+  if (length <= itemsPerPage) {
+    return <div className="flex justify-center">{children}</div>;
+  }
+
   return (
     <div className="container mx-auto relative overflow-hidden">
       <div
