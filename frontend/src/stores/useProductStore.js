@@ -4,7 +4,6 @@ import { toast } from "react-hot-toast";
 
 export const useProductStore = create((set) => ({
   products: [],
-  featuredProducts: [],
   loading: false,
 
   createProduct: async (productData) => {
@@ -52,7 +51,7 @@ export const useProductStore = create((set) => ({
 
     try {
       const response = await axios.get("/product/featured");
-      set({ featuredProducts: response.data.products });
+      set({ products: response.data.products });
     } catch (error) {
       toast.error(error.response.data.error || "Failed to fetch products!");
     } finally {

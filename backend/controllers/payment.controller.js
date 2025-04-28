@@ -1,7 +1,6 @@
 import { stripe } from "../lib/stripe.js";
 import Coupon from "../models/coupon.model.js";
 import Order from "../models/order.model.js";
-import User from "../models/user.model.js";
 
 const createStripeCoupon = async (discount) => {
   const coupon = await stripe.coupons.create({
@@ -16,16 +15,16 @@ const createNewCoupon = async (user, totalPrice) => {
   let discount = 0;
 
   switch (true) {
-    case totalPrice > 5000:
+    case totalPrice > 5000000:
       discount = 50;
       break;
-    case totalPrice > 4000:
+    case totalPrice > 4000000:
       discount = 40;
       break;
-    case totalPrice > 3000:
+    case totalPrice > 3000000:
       discount = 30;
       break;
-    case totalPrice > 2000:
+    case totalPrice > 2000000:
       discount = 20;
       break;
     default:
@@ -72,7 +71,7 @@ export const createCheckoutSession = async (req, res) => {
             images: [
               product.photo && product.photo.startsWith("http")
                 ? product.photo
-                : "https://via.placeholder.com/150",
+                : "https://res.cloudinary.com/dudp3mt6r/image/upload/v1745829643/nophoto_szr2sb.jpg",
             ],
           },
           unit_amount: price,
@@ -159,7 +158,7 @@ export const checkoutSuccess = async (req, res) => {
 
       await order.save();
 
-      if (session.amount_total > 1000) {
+      if (session.amount_total > 1000000) {
         const newCoupon = await createNewCoupon(user, session.amount_total);
         return res
           .status(201)

@@ -15,8 +15,8 @@ import { useEffect } from "react";
 
 function App() {
   const { user, getUser, checkingAuth } = useUserStore();
-  const { getUserCoupons, userCoupons } = useCouponStore();
-  const { getCartItems, cart } = useCartStore();
+  const { getUserCoupons } = useCouponStore();
+  const { getCartItems } = useCartStore();
 
   useEffect(() => {
     getUser();

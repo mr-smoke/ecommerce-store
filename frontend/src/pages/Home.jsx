@@ -9,7 +9,7 @@ import { LuShoppingCart } from "react-icons/lu";
 
 const Home = () => {
   const { coupons, getCoupons, loading, addCouponToUser } = useCouponStore();
-  const { getFeaturedProducts, featuredProducts } = useProductStore();
+  const { getFeaturedProducts, products } = useProductStore();
 
   useEffect(() => {
     getCoupons();
@@ -31,8 +31,8 @@ const Home = () => {
         <h2 className="pb-3 text-2xl font-semibold bg-gradient-to-r text-transparent bg-clip-text from-emerald-300 to-emerald-400">
           Featured Products
         </h2>
-        <Carousel length={featuredProducts.length}>
-          {featuredProducts.map((product) => (
+        <Carousel length={products.length}>
+          {products.map((product) => (
             <div
               key={product._id}
               className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"

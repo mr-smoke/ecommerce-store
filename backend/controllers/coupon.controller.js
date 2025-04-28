@@ -1,5 +1,4 @@
 import Coupon from "../models/coupon.model.js";
-import User from "../models/user.model.js";
 
 export const createCoupon = async (req, res) => {
   const { name, expiry, discount } = req.body;
@@ -57,15 +56,13 @@ export const addCouponToUser = async (req, res) => {
   const couponId = req.params.id;
 
   try {
-    const userId = req.user._id;
+    const user = req.user;
 
     const coupon = await Coupon.findById(couponId);
 
     if (!coupon) {
       return res.status(404).json({ error: "Coupon not found" });
     }
-
-    const user = await User.findById(userId);
 
     const alreadyHasCoupon = user.coupons.some(
       (c) => c._id.toString() === coupon._id.toString()
@@ -86,19 +83,21 @@ export const addCouponToUser = async (req, res) => {
 
 export const getUserCoupons = async (req, res) => {
   try {
+    const user = req.user;
+
     await Coupon.updateMany(
       { expiry: { $lt: new Date() } },
       { $set: { isActive: false } }
     );
 
     const coupons = await Coupon.find({
-      _id: { $in: req.user.coupons },
+      _id: { $in: user.coupons },
       isActive: true,
     });
 
     const userCoupons = coupons
       .map((coupon) => {
-        const userCoupon = req.user.coupons.find((c) => c.id === coupon.id);
+        const userCoupon = user.coupons.find((c) => c.id === coupon.id);
         return { ...coupon.toJSON(), used: userCoupon.used };
       })
       .filter((coupon) => !coupon.used);
