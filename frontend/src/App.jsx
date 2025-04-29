@@ -33,7 +33,7 @@ function App() {
     return (
       <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
         <svg
-          className="animate-spin h-10 w-10 text-green-500"
+          className="animate-spin h-10 w-10 text-emerald-500"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -86,7 +86,10 @@ function App() {
             path="/cart"
             element={user ? <Cart /> : <Navigate to="/login" />}
           />
-          <Route path="/success" element={<PurchaseSuccess />} />
+          <Route
+            path="/success"
+            element={user ? <PurchaseSuccess /> : <Navigate to="/" />}
+          />
         </Routes>
       </div>
       <Toaster />
