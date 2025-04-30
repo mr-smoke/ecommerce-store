@@ -1,24 +1,9 @@
-import { Link } from "react-router-dom";
-import { categories } from "../lib/data";
-import Carousel from "../components/Carousel";
-import Coupon from "../components/Coupon";
-import Product from "../components/Product";
+import FeaturedProducts from "../components/FeaturedProducts";
+import CategoryGrid from "../components/CategoryGrid";
+import PromotionalCoupons from "../components/PromotionalCoupons";
 import { useEffect } from "react";
-import { useCouponStore } from "../stores/useCouponStore";
-import { useProductStore } from "../stores/useProductStore";
-import { LuShoppingCart } from "react-icons/lu";
 
 const Home = () => {
-  const { coupons, getCoupons, addCouponToUser } = useCouponStore();
-  const { getFeaturedProducts, products, loading } = useProductStore();
-
-  useEffect(() => {
-    getCoupons();
-    getFeaturedProducts();
-  }, [getCoupons, getFeaturedProducts]);
-
-  const activeCoupons = coupons.filter((coupon) => coupon.isActive);
-
   return (
     <main className="max-w-6xl mx-auto pt-24">
       <h1 className="pt-16 text-5xl font-semibold text-center text-emerald-400">
@@ -28,87 +13,9 @@ const Home = () => {
         Discover the latest and greatest products we have to offer. From tech to
         fashion, we have something for everyone.
       </p>
-      <section className="pt-12">
-        <h2 className="pb-3 text-2xl font-semibold bg-gradient-to-r text-transparent bg-clip-text from-emerald-300 to-emerald-400">
-          Featured Products
-        </h2>
-        {loading ? (
-          <div className="flex">
-            {Array.from({ length: 4 }, (_, index) => (
-              <div
-                key={index}
-                className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"
-              >
-                <div className="animate-pulse bg-gray-900 bg-opacity-30 backdrop-blur-sm border border-gray-700 rounded-lg shadow-md flex flex-col overflow-hidden">
-                  <div className="h-48 bg-gray-700" />
-                  <div className="p-6 flex flex-col gap-4">
-                    <div className="h-7 bg-gray-700 rounded w-1/2" />
-                    <div className="h-8 bg-gray-700 rounded w-full" />
-                    <div className="h-10 bg-gray-700 rounded w-full" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <Carousel length={products.length}>
-            {products.map((product) => (
-              <div
-                key={product._id}
-                className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"
-              >
-                <Product product={product} loadingProduct={loading} />
-              </div>
-            ))}
-          </Carousel>
-        )}
-      </section>
-      <section className="pt-12">
-        <h2 className="pb-3 text-2xl font-semibold bg-gradient-to-r text-transparent bg-clip-text from-emerald-300 to-emerald-400">
-          Explore Categories
-        </h2>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {categories.map((category) => (
-            <Link
-              key={category.id + category}
-              to={category.href}
-              className="relative overflow-hidden bg-white rounded-lg shadow-lg"
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-50 z-10" />
-              <img
-                src={category.img}
-                alt={category.name}
-                className="object-cover w-full h-48"
-              />
-              <div className="p-4">
-                <h2 className="z-20 text-black text-lg font-semibold bg-white capitalize">
-                  {category.name}
-                </h2>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-      <section className="py-16">
-        <Carousel length={activeCoupons.length}>
-          {activeCoupons.map((coupon) => (
-            <div
-              key={coupon._id}
-              className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"
-            >
-              <Coupon coupon={coupon}>
-                <button
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2"
-                  onClick={() => addCouponToUser(coupon)}
-                  disabled={loading}
-                >
-                  Claim Coupon
-                </button>
-              </Coupon>
-            </div>
-          ))}
-        </Carousel>
-      </section>
+      <FeaturedProducts />
+      <CategoryGrid />
+      <PromotionalCoupons />
     </main>
   );
 };

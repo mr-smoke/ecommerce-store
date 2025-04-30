@@ -1,38 +1,38 @@
 export const categories = [
   {
     id: 1,
-    name: "electronics",
-    img: "/images/electronics.jpg",
-    href: "/category/electronics",
-  },
-  {
-    id: 2,
     name: "fashion",
-    img: "/images/fashion.jpg",
+    img: "fashion.avif",
     href: "/category/fashion",
   },
   {
+    id: 2,
+    name: "electronics",
+    img: "electronics.avif",
+    href: "/category/electronics",
+  },
+  {
     id: 3,
-    name: "home",
-    img: "/images/home.jpg",
-    href: "/category/home",
+    name: "sports",
+    img: "sports.avif",
+    href: "/category/sports",
   },
   {
     id: 4,
     name: "books",
-    img: "/images/books.jpg",
+    img: "books.avif",
     href: "/category/books",
   },
   {
     id: 5,
-    name: "sports",
-    img: "/images/sports.jpg",
-    href: "/category/sports",
+    name: "home",
+    img: "home.avif",
+    href: "/category/home",
   },
   {
     id: 6,
     name: "toys",
-    img: "/images/toys.jpg",
+    img: "toys.avif",
     href: "/category/toys",
   },
 ];

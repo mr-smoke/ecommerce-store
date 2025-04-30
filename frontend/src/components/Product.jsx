@@ -1,7 +1,7 @@
 import { LuShoppingCart, LuLoader } from "react-icons/lu";
 import { useCartStore } from "../stores/useCartStore";
 
-const Product = ({ product, loadingProduct }) => {
+const Product = ({ product }) => {
   const { addToCart, loading } = useCartStore();
 
   return (
