@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { LuUser, LuMail, LuLock, LuLoader } from "react-icons/lu";
+import { LuLoader } from "react-icons/lu";
 import { useState } from "react";
 import { useUserStore } from "../stores/useUserStore";
+import FormInput from "../components/FormInput";
 
 const Signup = () => {
   const { signup, loading } = useUserStore();
@@ -17,6 +18,11 @@ const Signup = () => {
     signup(formData);
   };
 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
   return (
     <main className="flex items-center justify-center min-h-screen">
       <form
@@ -26,84 +32,37 @@ const Signup = () => {
         <h1 className="text-4xl font-extrabold text-emerald-400 text-center">
           Signup
         </h1>
-        <div>
-          <label htmlFor="name" className="text-gray-300 font-medium">
-            Name
-          </label>
-          <div className="flex items-center gap-2 bg-gray-700 p-2 rounded-lg">
-            <LuUser className="text-gray-300" size={20} />
-            <input
-              type="text"
-              id="name"
-              className="bg-gray-700 text-gray-300 w-full outline-none"
-              placeholder="Enter your name"
-              required
-              maxLength={20}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-            />
-          </div>
-        </div>
-        <div>
-          <label htmlFor="email" className="text-gray-300 font-medium">
-            Email
-          </label>
-          <div className="flex items-center gap-2 bg-gray-700 p-2 rounded-lg">
-            <LuMail className="text-gray-300" size={20} />
-            <input
-              type="email"
-              id="email"
-              className="bg-gray-700 text-gray-300 w-full outline-none"
-              placeholder="Enter your email"
-              required
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
-          </div>
-        </div>
-        <div>
-          <label htmlFor="password" className="text-gray-300 font-medium">
-            Password
-          </label>
-          <div className="flex items-center gap-2 bg-gray-700 p-2 rounded-lg">
-            <LuLock className="text-gray-300" size={20} />
-            <input
-              type="password"
-              id="password"
-              className="bg-gray-700 text-gray-300 w-full outline-none"
-              placeholder="Enter your password"
-              required
-              minLength={6}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-            />
-          </div>
-        </div>
-        <div>
-          <label
-            htmlFor="confirmPassword"
-            className="text-gray-300 font-medium"
-          >
-            Confirm Password
-          </label>
-          <div className="flex items-center gap-2 bg-gray-700 p-2 rounded-lg">
-            <LuLock className="text-gray-300" size={20} />
-            <input
-              type="password"
-              id="confirmPassword"
-              className="bg-gray-700 text-gray-300 w-full outline-none"
-              placeholder="Confirm your password"
-              required
-              minLength={6}
-              onChange={(e) =>
-                setFormData({ ...formData, confirmPassword: e.target.value })
-              }
-            />
-          </div>
-        </div>
+        <FormInput
+          label="Name"
+          id="name"
+          type="text"
+          placeholder="Enter your name"
+          onChange={handleChange}
+          maxLength={20}
+        />
+        <FormInput
+          label="Email"
+          id="email"
+          type="email"
+          placeholder="Enter your email"
+          onChange={handleChange}
+        />
+        <FormInput
+          label="Password"
+          id="password"
+          type="password"
+          placeholder="Enter your password"
+          onChange={handleChange}
+          minLength={6}
+        />
+        <FormInput
+          label="Confirm Password"
+          id="confirmPassword"
+          type="password"
+          placeholder="Confirm your password"
+          onChange={handleChange}
+          minLength={6}
+        />
         <button
           type="submit"
           className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-2 rounded-lg w-full mt-4 transition duration-150 ease-in-out"
