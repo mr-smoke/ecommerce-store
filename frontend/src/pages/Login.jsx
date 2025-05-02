@@ -1,8 +1,9 @@
-import { LuLoader } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useUserStore } from "../stores/useUserStore";
+import FormContainer from "../components/FormContainer";
 import FormInput from "../components/FormInput";
+import Button from "../components/Button";
 
 const Login = () => {
   const { login, loading } = useUserStore();
@@ -18,15 +19,18 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
+  const footer = (
+    <p className="text-gray-300">
+      Don't have an account?{" "}
+      <Link to="/signup" className="text-blue-500">
+        Signup
+      </Link>
+    </p>
+  );
+
   return (
     <main className="flex items-center justify-center min-h-screen">
-      <form
-        className="bg-gray-900 shadow p-10 rounded-lg flex flex-col gap-4 sm:w-96"
-        onSubmit={handleSubmit}
-      >
-        <h1 className="text-4xl font-extrabold text-emerald-400 text-center">
-          Login
-        </h1>
+      <FormContainer title="Login" footer={footer} onSubmit={handleSubmit}>
         <FormInput
           label="Email"
           id="email"
@@ -41,27 +45,8 @@ const Login = () => {
           placeholder="Enter your password"
           onChange={handleChange}
         />
-        <button
-          type="submit"
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-2 rounded-lg w-full mt-4 transition duration-150 ease-in-out"
-          disabled={loading}
-        >
-          {loading ? (
-            <span className="flex justify-center items-center gap-2">
-              <LuLoader className="animate-spin" size={20} />
-              Loading...
-            </span>
-          ) : (
-            "Login"
-          )}
-        </button>
-        <p className="text-gray-300 text-center">
-          Don't have an account?{" "}
-          <Link to="/signup" className="text-blue-500">
-            Signup
-          </Link>
-        </p>
-      </form>
+        <Button type="submit" loading={loading} text="Login" />
+      </FormContainer>
     </main>
   );
 };

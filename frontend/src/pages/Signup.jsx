@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { LuLoader } from "react-icons/lu";
 import { useState } from "react";
 import { useUserStore } from "../stores/useUserStore";
+import FormContainer from "../components/FormContainer";
 import FormInput from "../components/FormInput";
+import Button from "../components/Button";
 
 const Signup = () => {
   const { signup, loading } = useUserStore();
@@ -23,15 +24,18 @@ const Signup = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
+  const footer = (
+    <p className="text-gray-300">
+      Already have an account?{" "}
+      <Link to="/login" className="text-blue-500">
+        Login
+      </Link>
+    </p>
+  );
+
   return (
     <main className="flex items-center justify-center min-h-screen">
-      <form
-        className="bg-gray-900 shadow p-10 rounded-lg flex flex-col gap-4 sm:w-96"
-        onSubmit={handleSubmit}
-      >
-        <h1 className="text-4xl font-extrabold text-emerald-400 text-center">
-          Signup
-        </h1>
+      <FormContainer title="Signup" footer={footer} onSubmit={handleSubmit}>
         <FormInput
           label="Name"
           id="name"
@@ -63,27 +67,8 @@ const Signup = () => {
           onChange={handleChange}
           minLength={6}
         />
-        <button
-          type="submit"
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-2 rounded-lg w-full mt-4 transition duration-150 ease-in-out"
-          disabled={loading}
-        >
-          {loading ? (
-            <span className="flex justify-center items-center gap-2">
-              <LuLoader className="animate-spin" size={20} />
-              Loading...
-            </span>
-          ) : (
-            "Signup"
-          )}
-        </button>
-        <p className="text-gray-300 text-center">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-500">
-            Login
-          </Link>
-        </p>
-      </form>
+        <Button type="submit" loading={loading} text="Signup" />
+      </FormContainer>
     </main>
   );
 };
