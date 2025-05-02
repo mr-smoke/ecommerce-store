@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useProductStore } from "../stores/useProductStore";
 import Carousel from "../components/Carousel";
 import Product from "../components/Product";
+import ProductSkeleton from "../components/ProductSkeleton";
 
 const FeaturedProducts = () => {
   const { getFeaturedProducts, products, loading } = useProductStore();
@@ -18,29 +19,13 @@ const FeaturedProducts = () => {
         Featured Products
       </h2>
       {loading ? (
-        <div className="flex">
-          {Array.from({ length: 4 }, (_, index) => (
-            <div
-              key={index}
-              className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"
-            >
-              <div className="animate-pulse bg-gray-900 bg-opacity-30 backdrop-blur-sm border border-gray-700 rounded-lg shadow-md flex flex-col overflow-hidden">
-                <div className="h-48 bg-gray-700" />
-                <div className="p-6 flex flex-col gap-4">
-                  <div className="h-7 bg-gray-700 rounded w-1/2" />
-                  <div className="h-8 bg-gray-700 rounded w-full" />
-                  <div className="h-10 bg-gray-700 rounded w-full" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ProductSkeleton count={4} />
       ) : (
         <Carousel length={products.length}>
           {products.map((product) => (
             <div
               key={product._id}
-              className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"
+              className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 p-2"
             >
               <Product product={product} />
             </div>
