@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useCouponStore } from "../stores/useCouponStore";
 import { useModal } from "./Modal";
+import Button from "./Button";
 
 const UpdateCoupon = ({ coupon }) => {
-  const { updateCoupon } = useCouponStore();
+  const { updateCoupon, loading } = useCouponStore();
   const { closeModal } = useModal();
   const [formData, setFormData] = useState({
     name: "",
@@ -79,9 +80,12 @@ const UpdateCoupon = ({ coupon }) => {
           onChange={(e) => setFormData({ ...formData, expiry: e.target.value })}
         />
       </div>
-      <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200 mt-3">
-        Update Coupon
-      </button>
+      <Button
+        type="submit"
+        loading={loading}
+        text="Update Coupon"
+        className="mt-3"
+      />
     </form>
   );
 };

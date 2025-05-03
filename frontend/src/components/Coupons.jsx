@@ -10,6 +10,7 @@ import { Modal, ModalTrigger, ModalContent } from "./Modal";
 import CreateCoupon from "./CreateCoupon";
 import UpdateCoupon from "./UpdateCoupon";
 import { useCouponStore } from "../stores/useCouponStore";
+import Button from "./Button";
 
 const Coupons = () => {
   const { coupons, getCoupons, deleteCoupon, loading } = useCouponStore();
@@ -69,34 +70,35 @@ const Coupons = () => {
                   })}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    className={`text-white font-bold py-2 px-4 rounded transition-colors duration-200
-                ${
-                  coupon.isActive
-                    ? "bg-emerald-600 hover:bg-emerald-700"
-                    : "bg-gray-600 hover:bg-gray-700"
-                }`}
-                  >
-                    <LuCircleCheckBig />
-                  </button>
+                  <Button
+                    type="button"
+                    icon={LuCircleCheckBig}
+                    className={`w-max ${
+                      coupon.isActive
+                        ? "bg-emerald-600 hover:bg-emerald-700"
+                        : "bg-gray-600 hover:bg-gray-700"
+                    }`}
+                  />
                 </td>
                 <td className="px-6 py-4 whitespace-no-wrap flex gap-2">
                   <Modal>
                     <ModalTrigger>
-                      <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
-                        <LuSettings />
-                      </button>
+                      <Button
+                        type="button"
+                        icon={LuSettings}
+                        className="bg-blue-600 hover:bg-blue-700 w-max"
+                      />
                     </ModalTrigger>
                     <ModalContent>
                       <UpdateCoupon coupon={coupon} />
                     </ModalContent>
                   </Modal>
-                  <button
-                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+                  <Button
+                    type="button"
+                    icon={LuTrash2}
+                    className="bg-red-600 hover:bg-red-700 w-max"
                     onClick={() => deleteCoupon(coupon._id)}
-                  >
-                    <LuTrash2 />
-                  </button>
+                  />
                 </td>
               </tr>
             ))}

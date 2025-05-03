@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useCouponStore } from "../stores/useCouponStore";
 import Carousel from "../components/Carousel";
 import Coupon from "../components/Coupon";
+import Button from "./Button";
 
 const PromotionalCoupons = () => {
   const { coupons, getCoupons, addCouponToUser, loading } = useCouponStore();
@@ -14,9 +15,9 @@ const PromotionalCoupons = () => {
 
   if (activeCoupons.length === 0) return null;
 
-  return (
-    <section className="py-16">
-      {loading ? (
+  if (loading) {
+    return (
+      <section className="py-16">
         <div className="flex">
           {Array.from({ length: 4 }, (_, index) => (
             <div
@@ -34,26 +35,30 @@ const PromotionalCoupons = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <Carousel length={activeCoupons.length}>
-          {activeCoupons.map((coupon) => (
-            <div
-              key={coupon._id}
-              className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"
-            >
-              <Coupon coupon={coupon}>
-                <button
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2"
-                  onClick={() => addCouponToUser(coupon)}
-                  disabled={loading}
-                >
-                  Claim Coupon
-                </button>
-              </Coupon>
-            </div>
-          ))}
-        </Carousel>
-      )}
+      </section>
+    );
+  }
+
+  return (
+    <section className="py-16">
+      <Carousel length={activeCoupons.length}>
+        {activeCoupons.map((coupon) => (
+          <div
+            key={coupon._id}
+            className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 px-2"
+          >
+            <Coupon coupon={coupon}>
+              <Button
+                type="button"
+                loading={loading}
+                text="Claim Coupon"
+                onClick={() => addCouponToUser(coupon)}
+                className="w-max mt-2"
+              />
+            </Coupon>
+          </div>
+        ))}
+      </Carousel>
     </section>
   );
 };

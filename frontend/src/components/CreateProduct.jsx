@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { categories } from "../lib/data";
 import { toast } from "react-hot-toast";
 import { useProductStore } from "../stores/useProductStore";
+import Button from "./Button";
 
 const CreateProduct = () => {
-  const { createProduct } = useProductStore();
+  const { createProduct, loading } = useProductStore();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -171,12 +172,12 @@ const CreateProduct = () => {
             }
           />
         </div>
-        <button
+        <Button
           type="submit"
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-2 rounded-lg w-full mt-4 transition duration-150 ease-in-out"
-        >
-          Create Product
-        </button>
+          loading={loading}
+          text="Create Product"
+          className="mt-4"
+        />
       </form>
     </div>
   );

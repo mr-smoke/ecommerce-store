@@ -1,6 +1,7 @@
 import { LuLoader, LuPackageOpen, LuStar, LuTrash2 } from "react-icons/lu";
 import { useProductStore } from "../stores/useProductStore";
 import { useEffect } from "react";
+import Button from "./Button";
 
 const Products = () => {
   const {
@@ -69,27 +70,24 @@ const Products = () => {
                 {product.category}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button
-                  className={`text-white font-bold py-2 px-4 rounded transition-colors duration-200
-                ${
-                  product.featured
-                    ? "bg-emerald-600 hover:bg-emerald-700"
-                    : "bg-gray-600 hover:bg-gray-700"
-                }`}
-                  onClick={() => {
-                    toggleFeaturedProducts(product._id);
-                  }}
-                >
-                  <LuStar />
-                </button>
+                <Button
+                  type="button"
+                  onClick={() => toggleFeaturedProducts(product._id)}
+                  icon={LuStar}
+                  className={`w-max ${
+                    product.featured
+                      ? "bg-emerald-600 hover:bg-emerald-700"
+                      : "bg-gray-600 hover:bg-gray-700"
+                  }`}
+                />
               </td>
               <td className="px-6 py-4 whitespace-no-wrap">
-                <button
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
+                <Button
+                  type="button"
+                  icon={LuTrash2}
+                  className="bg-red-600 hover:bg-red-700 w-max"
                   onClick={() => deleteProduct(product._id)}
-                >
-                  <LuTrash2 />
-                </button>
+                />
               </td>
             </tr>
           ))}

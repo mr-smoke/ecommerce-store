@@ -9,6 +9,7 @@ import {
 } from "react-icons/lu";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
+import Button from "./Button";
 
 const Navbar = () => {
   const { logout, user, loading } = useUserStore();
@@ -50,23 +51,14 @@ const Navbar = () => {
             </Link>
           )}
           {user ? (
-            <button
+            <Button
+              type="button"
+              loading={loading}
+              text="Logout"
               onClick={() => logout()}
-              disabled={loading}
-              className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md flex items-center gap-1 transition duration-300 ease-in-out"
-            >
-              {loading ? (
-                <>
-                  <LuLoader className="animate-spin" size={20} />
-                  <span>Loading...</span>
-                </>
-              ) : (
-                <>
-                  <LuLogOut size={20} />
-                  <span>Logout</span>
-                </>
-              )}
-            </button>
+              icon={LuLogOut}
+              className="bg-gray-600 hover:bg-gray-700 font-normal"
+            />
           ) : (
             <>
               <Link

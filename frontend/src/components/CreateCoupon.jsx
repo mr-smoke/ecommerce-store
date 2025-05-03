@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useCouponStore } from "../stores/useCouponStore";
+import Button from "./Button";
 
 const CreateCoupon = () => {
-  const { createCoupon } = useCouponStore();
+  const { createCoupon, loading } = useCouponStore();
   const [formData, setFormData] = useState({
     name: "",
     discount: "",
@@ -48,9 +49,7 @@ const CreateCoupon = () => {
         value={formData.expiry}
         onChange={(e) => setFormData({ ...formData, expiry: e.target.value })}
       />
-      <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">
-        Create Coupon
-      </button>
+      <Button type="submit" loading={loading} text="Create Coupon" />
     </form>
   );
 };

@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { Modal, ModalTrigger, ModalContent } from "../components/Modal";
 import Coupon from "../components/Coupon";
 import OrderSummary from "../components/OrderSummary";
+import Button from "../components/Button";
 
 const Cart = () => {
   const {
@@ -110,9 +111,7 @@ const Cart = () => {
             </p>
             <Modal>
               <ModalTrigger>
-                <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 w-full">
-                  View Coupons
-                </button>
+                <Button type="button" text="View Coupons" />
               </ModalTrigger>
               <ModalContent>
                 {userCoupons.length > 0 ? (
@@ -122,14 +121,14 @@ const Cart = () => {
                     </h2>
                     {userCoupons.map((coupon) => (
                       <Coupon key={coupon._id} coupon={coupon}>
-                        <button
-                          className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded transition-colors duration-300 mt-2"
+                        <Button
+                          type="button"
+                          text="Apply Coupon"
                           onClick={() => {
                             applyCoupon(coupon._id);
                           }}
-                        >
-                          Apply Coupon
-                        </button>
+                          className="w-max mt-2"
+                        />
                       </Coupon>
                     ))}
                   </div>
