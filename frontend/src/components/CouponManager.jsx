@@ -1,0 +1,78 @@
+import { LuBadgeX } from "react-icons/lu";
+import { useCartStore } from "../stores/useCartStore";
+import { useCouponStore } from "../stores/useCouponStore";
+import { Modal, ModalTrigger, ModalContent } from "../components/Modal";
+import Coupon from "../components/Coupon";
+import Button from "../components/Button";
+
+const CouponManager = () => {
+  const { applyCoupon, removeCoupon, coupon, loading } = useCartStore();
+  const { userCoupons } = useCouponStore();
+
+  return (
+    <div className="flex flex-col gap-4 p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm">
+      <div>
+        <h2 className="text-2xl text-emerald-400 font-bold">Use Coupon</h2>
+        <p className="text-gray-400 text-xs pt-1">
+          Apply a coupon code to get a discount on your order.
+        </p>
+      </div>
+      <p className="bg-gray-700 text-gray-400 p-2 rounded-lg pointer-events-none">
+        {coupon ? (
+          <>
+            <span className="text-emerald-400 font-semibold">
+              {coupon.name} - {coupon.discount}% off
+            </span>
+          </>
+        ) : (
+          <span className="text-gray-400 font-semibold">No coupon applied</span>
+        )}
+      </p>
+      <Modal>
+        <ModalTrigger>
+          <Button type="button" text="View Coupons" />
+        </ModalTrigger>
+        <ModalContent>
+          {userCoupons.length > 0 ? (
+            <div className="flex flex-col gap-4">
+              <h2 className="text-2xl text-emerald-400 font-bold">
+                Available Coupons
+              </h2>
+              {userCoupons.map((coupon) => (
+                <Coupon key={coupon._id} coupon={coupon}>
+                  <Button
+                    type="button"
+                    text="Apply Coupon"
+                    onClick={() => {
+                      applyCoupon(coupon._id);
+                    }}
+                    className="w-max mt-2"
+                  />
+                </Coupon>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm">
+              <h2 className="text-2xl text-gray-400 font-bold">
+                No coupons available
+              </h2>
+            </div>
+          )}
+        </ModalContent>
+      </Modal>
+      {coupon && (
+        <button
+          className="text-red-500 underline font-medium inline-flex items-center justify-center gap-1 text-xs w-max self-center"
+          onClick={() => {
+            removeCoupon();
+          }}
+        >
+          Remove Coupon
+          <LuBadgeX />
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default CouponManager;
