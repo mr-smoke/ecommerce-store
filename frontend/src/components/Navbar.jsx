@@ -57,7 +57,7 @@ const Navbar = () => {
               text="Logout"
               onClick={() => logout()}
               icon={LuLogOut}
-              className="bg-gray-600 hover:bg-gray-700 font-normal"
+              className="bg-gray-600 hover:bg-gray-700 !font-normal"
             />
           ) : (
             <>

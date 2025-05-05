@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useUserStore } from "../stores/useUserStore";
-import FormContainer from "../components/FormContainer";
-import FormInput from "../components/FormInput";
+import FormContainer from "../components/forms/FormContainer";
+import TextInput from "../components/forms/TextInput";
 import Button from "../components/Button";
 
 const Signup = () => {
@@ -36,36 +36,44 @@ const Signup = () => {
   return (
     <main className="flex items-center justify-center min-h-screen">
       <FormContainer title="Signup" footer={footer} onSubmit={handleSubmit}>
-        <FormInput
+        <TextInput
           label="Name"
           id="name"
+          icon="user"
           type="text"
           placeholder="Enter your name"
-          onChange={handleChange}
           maxLength={20}
+          required
+          onChange={handleChange}
         />
-        <FormInput
+        <TextInput
           label="Email"
           id="email"
+          icon="email"
           type="email"
           placeholder="Enter your email"
+          required
           onChange={handleChange}
         />
-        <FormInput
+        <TextInput
           label="Password"
           id="password"
+          icon="password"
           type="password"
           placeholder="Enter your password"
-          onChange={handleChange}
+          required
           minLength={6}
+          onChange={handleChange}
         />
-        <FormInput
+        <TextInput
           label="Confirm Password"
           id="confirmPassword"
+          icon="password"
           type="password"
           placeholder="Confirm your password"
-          onChange={handleChange}
+          required
           minLength={6}
+          onChange={handleChange}
         />
         <Button type="submit" loading={loading} text="Signup" />
       </FormContainer>

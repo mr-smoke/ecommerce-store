@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useCouponStore } from "../stores/useCouponStore";
 import { useModal } from "./Modal";
+import FormContainer from "./forms/FormContainer";
+import TextInput from "./forms/TextInput";
+import NumberInput from "./forms/NumberInput";
 import Button from "./Button";
 
 const UpdateCoupon = ({ coupon }) => {
@@ -33,60 +36,42 @@ const UpdateCoupon = ({ coupon }) => {
   };
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-      <div className="flex flex-col">
-        <label htmlFor="name" className="text-gray-300 font-medium">
-          Coupon Name
-        </label>
-        <input
-          id="name"
-          type="text"
-          className="px-4 py-2 rounded-lg bg-gray-700 text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-          required
-          minLength="6"
-          maxLength="12"
-          defaultValue={coupon.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="discount" className="text-gray-300 font-medium">
-          Discount %
-        </label>
-        <input
-          id="discount"
-          type="number"
-          className="px-4 py-2 rounded-lg bg-gray-700 text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 min-w-32"
-          required
-          min="1"
-          max="100"
-          defaultValue={coupon.discount}
-          onChange={(e) =>
-            setFormData({ ...formData, discount: e.target.value })
-          }
-        />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="expiry" className="text-gray-300 font-medium">
-          Expiry Date
-        </label>
-        <input
-          id="expiry"
-          type="date"
-          className="px-4 py-2 rounded-lg bg-gray-700 text-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-          required
-          min={new Date().toISOString().split("T")[0]}
-          defaultValue={coupon.expiry.split("T")[0]}
-          onChange={(e) => setFormData({ ...formData, expiry: e.target.value })}
-        />
-      </div>
-      <Button
-        type="submit"
-        loading={loading}
-        text="Update Coupon"
-        className="mt-3"
+    <FormContainer
+      onSubmit={handleSubmit}
+      title="Update Coupon"
+      className="text-base"
+    >
+      <TextInput
+        label="Coupon Name"
+        id="name"
+        type="text"
+        required
+        minLength={6}
+        maxLength={12}
+        defaultValue={coupon.name}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
       />
-    </form>
+      <NumberInput
+        label="Discount %"
+        id="discount"
+        type="number"
+        required
+        min="1"
+        max="100"
+        defaultValue={coupon.discount}
+        onChange={(e) => setFormData({ ...formData, discount: e.target.value })}
+      />
+      <NumberInput
+        label="Expiry Date"
+        id="expiry"
+        type="date"
+        required
+        min={new Date().toISOString().split("T")[0]}
+        defaultValue={coupon.expiry.split("T")[0]}
+        onChange={(e) => setFormData({ ...formData, expiry: e.target.value })}
+      />
+      <Button type="submit" loading={loading} text="Update" className="mt-3" />
+    </FormContainer>
   );
 };
 

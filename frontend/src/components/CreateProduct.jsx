@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import { categories } from "../lib/data";
 import { toast } from "react-hot-toast";
 import { useProductStore } from "../stores/useProductStore";
+import FormContainer from "./forms/FormContainer";
+import TextInput from "./forms/TextInput";
+import NumberInput from "./forms/NumberInput";
+import TextAreaInput from "./forms/TextAreaInput";
+import SelectInput from "./forms/SelectInput";
 import Button from "./Button";
 
 const CreateProduct = () => {
@@ -59,126 +64,74 @@ const CreateProduct = () => {
 
   return (
     <div className="flex justify-center mb-8">
-      <form
-        className="bg-gray-800 shadow p-10 rounded-lg flex flex-col gap-3 sm:w-96"
-        onSubmit={handleSubmit}
-      >
-        <div className="flex">
-          <label
-            htmlFor="image"
-            className="bg-gray-600 text-gray-300 w-full outline-none p-2 rounded-lg cursor-pointer hover:bg-gray-700 transition duration-150 ease-in-out text-center font-medium"
-          >
-            {formData.image ? "Product Image Uploaded" : "Upload Product Image"}
-          </label>
-          <input
-            type="file"
-            id="image"
-            className="sr-only bg-gray-600 text-gray-300 w-full outline-none p-2 rounded-lg"
-            placeholder="Upload product image"
-            onChange={handleImageUpload}
-          />
-        </div>
-        <div>
-          <label htmlFor="name" className="text-gray-300 font-medium">
-            Product Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            className="bg-gray-600 text-gray-300 w-full outline-none p-2 rounded-lg"
-            placeholder="Enter product name"
-            required
-            maxLength="32"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="description" className="text-gray-300 font-medium">
-            Description
-          </label>
-          <textarea
-            id="description"
-            className="bg-gray-600 text-gray-300 w-full outline-none p-2 rounded-lg"
-            placeholder="Enter product description"
-            rows="4"
-            required
-            maxLength="100"
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-          />
-        </div>
-        <div>
-          <label htmlFor="price" className="text-gray-300 font-medium">
-            Price
-          </label>
-          <input
-            type="number"
-            step="0.01"
-            id="price"
-            className="bg-gray-600 text-gray-300 w-full outline-none p-2 rounded-lg"
-            placeholder="Enter product price"
-            required
-            max="1000000"
-            value={formData.price}
-            onChange={(e) =>
-              setFormData({ ...formData, price: e.target.value })
-            }
-          />
-        </div>
-        <div>
-          <label htmlFor="category" className="text-gray-300 font-medium">
-            Category
-          </label>
-          <select
-            id="category"
-            className="bg-gray-600 text-gray-300 w-full outline-none border border-transparent focus:outline-none rounded-lg p-2"
-            placeholder="Enter product category"
-            required
-            value={formData.category}
-            onChange={(e) =>
-              setFormData({ ...formData, category: e.target.value })
-            }
-          >
-            <option value="" disabled selected>
-              Select a category
-            </option>
-            {categories.map((category) => (
-              <option
-                key={category.id}
-                value={category.name}
-                className="capitalize"
-              >
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="quantity" className="text-gray-300 font-medium">
-            Quantity
-          </label>
-          <input
-            type="number"
-            id="quantity"
-            className="bg-gray-600 text-gray-300 w-full outline-none p-2 rounded-lg"
-            placeholder="Enter product quantity"
-            max="1000000"
-            value={formData.quantity}
-            onChange={(e) =>
-              setFormData({ ...formData, quantity: e.target.value })
-            }
-          />
-        </div>
+      <FormContainer onSubmit={handleSubmit} title="Create Product">
+        <TextInput
+          label="Product Name"
+          id="name"
+          type="text"
+          required
+          minLength={3}
+          maxLength={32}
+          value={formData.name}
+          placeholder="Enter product name"
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        />
+        <TextAreaInput
+          label="Product Description"
+          id="description"
+          value={formData.description}
+          placeholder="Enter product description"
+          required
+          minLength={10}
+          maxLength={100}
+          rows="4"
+          onChange={(e) =>
+            setFormData({ ...formData, description: e.target.value })
+          }
+        />
+        <NumberInput
+          label="Price"
+          id="price"
+          type="number"
+          required
+          step="0.01"
+          min="0.01"
+          max="1000000"
+          value={formData.price}
+          placeholder="Enter product price"
+          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+        />
+        <SelectInput
+          label="Category"
+          id="category"
+          value={formData.category}
+          placeholder="Select product category"
+          required
+          options={categories}
+          onChange={(e) =>
+            setFormData({ ...formData, category: e.target.value })
+          }
+        />
+        <NumberInput
+          label="Quantity"
+          id="quantity"
+          type="number"
+          required
+          min="1"
+          max="1000000"
+          value={formData.quantity}
+          placeholder="Enter product quantity"
+          onChange={(e) =>
+            setFormData({ ...formData, quantity: e.target.value })
+          }
+        />
         <Button
           type="submit"
           loading={loading}
-          text="Create Product"
-          className="mt-4"
+          text="Create"
+          className="mt-3"
         />
-      </form>
+      </FormContainer>
     </div>
   );
 };

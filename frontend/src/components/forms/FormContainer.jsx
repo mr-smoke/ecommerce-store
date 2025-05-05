@@ -1,7 +1,10 @@
-const FormContainer = ({ children, title, footer, onSubmit }) => {
+const FormContainer = ({ children, title, footer, onSubmit, className }) => {
   return (
     <form
-      className="bg-gray-900 shadow p-10 rounded-lg flex flex-col gap-4 sm:w-96"
+      className={
+        `bg-gray-900 shadow p-10 rounded-lg flex flex-col gap-4 sm:w-96 ` +
+        className
+      }
       onSubmit={onSubmit}
     >
       {title && (
