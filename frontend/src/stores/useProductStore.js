@@ -46,6 +46,26 @@ export const useProductStore = create((set) => ({
       set({ loading: false });
     }
   },
+  updateProduct: async (product) => {
+    set({ loading: true });
+
+    try {
+      const response = await axios.patch(
+        `/product/update/${product._id}`,
+        product
+      );
+      set((state) => ({
+        products: state.products.map((p) =>
+          p._id === product._id ? response.data : p
+        ),
+      }));
+      toast.success("Product updated successfully!");
+    } catch (error) {
+      toast.error(error.response.data.error || "Product update failed!");
+    } finally {
+      set({ loading: false });
+    }
+  },
   getFeaturedProducts: async () => {
     set({ loading: true });
 
