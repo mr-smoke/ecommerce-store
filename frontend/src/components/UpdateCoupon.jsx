@@ -35,6 +35,11 @@ const UpdateCoupon = ({ coupon }) => {
     closeModal();
   };
 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
   return (
     <FormContainer
       onSubmit={handleSubmit}
@@ -49,7 +54,7 @@ const UpdateCoupon = ({ coupon }) => {
         minLength={6}
         maxLength={12}
         defaultValue={coupon.name}
-        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        onChange={handleChange}
       />
       <NumberInput
         label="Discount %"
@@ -59,7 +64,7 @@ const UpdateCoupon = ({ coupon }) => {
         min="1"
         max="100"
         defaultValue={coupon.discount}
-        onChange={(e) => setFormData({ ...formData, discount: e.target.value })}
+        onChange={handleChange}
       />
       <NumberInput
         label="Expiry Date"
@@ -68,7 +73,7 @@ const UpdateCoupon = ({ coupon }) => {
         required
         min={new Date().toISOString().split("T")[0]}
         defaultValue={coupon.expiry.split("T")[0]}
-        onChange={(e) => setFormData({ ...formData, expiry: e.target.value })}
+        onChange={handleChange}
       />
       <Button type="submit" loading={loading} text="Update" className="mt-3" />
     </FormContainer>

@@ -8,6 +8,7 @@ import TextInput from "./forms/TextInput";
 import NumberInput from "./forms/NumberInput";
 import TextAreaInput from "./forms/TextAreaInput";
 import SelectInput from "./forms/SelectInput";
+import FileInput from "./forms/FileInput";
 import Button from "./Button";
 
 const CreateProduct = () => {
@@ -62,9 +63,19 @@ const CreateProduct = () => {
     });
   };
 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
   return (
     <div className="flex justify-center mb-8">
       <FormContainer onSubmit={handleSubmit} title="Create Product">
+        <FileInput
+          id="image"
+          value={formData.image}
+          onChange={handleImageUpload}
+        />
         <TextInput
           label="Product Name"
           id="name"
@@ -74,7 +85,7 @@ const CreateProduct = () => {
           maxLength={32}
           value={formData.name}
           placeholder="Enter product name"
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          onChange={handleChange}
         />
         <TextAreaInput
           label="Product Description"
@@ -85,9 +96,7 @@ const CreateProduct = () => {
           minLength={10}
           maxLength={100}
           rows="4"
-          onChange={(e) =>
-            setFormData({ ...formData, description: e.target.value })
-          }
+          onChange={handleChange}
         />
         <NumberInput
           label="Price"
@@ -99,7 +108,7 @@ const CreateProduct = () => {
           max="1000000"
           value={formData.price}
           placeholder="Enter product price"
-          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+          onChange={handleChange}
         />
         <SelectInput
           label="Category"
@@ -108,9 +117,7 @@ const CreateProduct = () => {
           placeholder="Select product category"
           required
           options={categories}
-          onChange={(e) =>
-            setFormData({ ...formData, category: e.target.value })
-          }
+          onChange={handleChange}
         />
         <NumberInput
           label="Quantity"
@@ -121,9 +128,7 @@ const CreateProduct = () => {
           max="1000000"
           value={formData.quantity}
           placeholder="Enter product quantity"
-          onChange={(e) =>
-            setFormData({ ...formData, quantity: e.target.value })
-          }
+          onChange={handleChange}
         />
         <Button
           type="submit"
