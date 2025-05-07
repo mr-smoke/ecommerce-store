@@ -37,7 +37,7 @@ export const ModalContent = ({ children }) => {
         className="fixed inset-0 bg-black opacity-50"
         onClick={closeModal}
       ></div>
-      <div className="bg-gray-800 rounded-lg shadow-lg p-6 z-10 relative overflow-y-auto max-h-[80vh]">
+      <div className="bg-gray-800 rounded-lg shadow-lg p-6 z-10 relative overflow-y-auto max-h-[80vh] overflow-x-hidden">
         <button
           className="absolute -top-1 right-1 text-gray-500 text-xl font-bold"
           onClick={closeModal}

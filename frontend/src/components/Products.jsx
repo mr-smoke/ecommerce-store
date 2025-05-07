@@ -1,6 +1,14 @@
-import { LuLoader, LuPackageOpen, LuStar, LuTrash2 } from "react-icons/lu";
+import {
+  LuLoader,
+  LuPackageOpen,
+  LuSettings,
+  LuStar,
+  LuTrash2,
+} from "react-icons/lu";
 import { useProductStore } from "../stores/useProductStore";
 import { useEffect } from "react";
+import { Modal, ModalTrigger, ModalContent } from "./Modal";
+import UpdateProduct from "./UpdateProduct";
 import Button from "./Button";
 
 const Products = () => {
@@ -24,7 +32,7 @@ const Products = () => {
           <th className="px-6 py-3 border-b-2">Price</th>
           <th className="px-6 py-3 border-b-2">Category</th>
           <th className="px-6 py-3 border-b-2">Featured</th>
-          <th className="px-6 py-3 border-b-2">Delete</th>
+          <th className="px-6 py-3 border-b-2">Actions</th>
         </tr>
       </thead>
       <tbody className="text-gray-300 text-sm">
@@ -81,7 +89,19 @@ const Products = () => {
                   }`}
                 />
               </td>
-              <td className="px-6 py-4 whitespace-no-wrap">
+              <td className="px-6 py-4 whitespace-no-wrap flex gap-2">
+                <Modal>
+                  <ModalTrigger>
+                    <Button
+                      type="button"
+                      icon={LuSettings}
+                      className="bg-blue-600 hover:bg-blue-700 w-max"
+                    />
+                  </ModalTrigger>
+                  <ModalContent>
+                    <UpdateProduct product={product} />
+                  </ModalContent>
+                </Modal>
                 <Button
                   type="button"
                   icon={LuTrash2}

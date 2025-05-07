@@ -36,15 +36,15 @@ const OrderSummary = () => {
       <h2 className="text-2xl text-emerald-400 font-bold">Order Summary</h2>
       <div className="flex justify-between">
         <p className="text-gray-400">Subtotal:</p>
-        <p className="font-semibold">${subtotal.toFixed(1)}</p>
+        <p className="font-semibold">${subtotal.toFixed(2)}</p>
       </div>
       <div className="flex justify-between">
         <p className="text-gray-400">Discount:</p>
-        <p className="font-semibold">${(subtotal - total).toFixed(1)}</p>
+        <p className="font-semibold">${(subtotal - total).toFixed(2)}</p>
       </div>
       <div className="flex justify-between border-t border-gray-700 py-2">
         <p className="font-bold">Total:</p>
-        <p className="font-bold text-emerald-400">${total.toFixed(1)}</p>
+        <p className="font-bold text-emerald-400">${total.toFixed(2)}</p>
       </div>
       <Button type="button" text="Checkout" onClick={handleCheckout} />
       <Link to="/" className="text-xs text-gray-400 text-center">

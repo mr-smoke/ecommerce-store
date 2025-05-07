@@ -2,6 +2,7 @@ const SelectInput = ({
   label,
   id,
   value,
+  defaultValue,
   placeholder,
   options = [],
   onChange,
@@ -19,6 +20,7 @@ const SelectInput = ({
         name={id}
         className="bg-gray-700 text-gray-300 w-full outline-none rounded-lg py-2 px-4 border border-gray-600 focus:ring-2 focus:ring-emerald-600"
         value={value}
+        defaultValue={defaultValue}
         required={required}
         onChange={onChange}
       >

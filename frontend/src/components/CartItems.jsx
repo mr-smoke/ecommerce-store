@@ -57,7 +57,9 @@ const CartItems = () => {
               </button>
             </div>
           </div>
-          <p className="text-emerald-500 font-bold">${product.price}</p>
+          <p className="text-emerald-500 font-bold">
+            ${product.price.toFixed(2)}
+          </p>
         </div>
       ))}
     </>
