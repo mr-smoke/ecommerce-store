@@ -71,7 +71,7 @@ const UpdateProduct = ({ product }) => {
       price: formData.price || product.price,
       category: formData.category || product.category,
       quantity: formData.quantity || product.quantity,
-      image: formData.image || product.image,
+      image: formData.image,
     });
     setFormData({
       name: "",

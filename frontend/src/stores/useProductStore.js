@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
 import { toast } from "react-hot-toast";
+import { useCartStore } from "./useCartStore";
 
 export const useProductStore = create((set) => ({
   products: [],
@@ -59,6 +60,10 @@ export const useProductStore = create((set) => ({
           p._id === product._id ? response.data : p
         ),
       }));
+      const cartStore = useCartStore.getState();
+      if (cartStore.cart.some((item) => item._id === product._id)) {
+        cartStore.getCartItems();
+      }
       toast.success("Product updated successfully!");
     } catch (error) {
       toast.error(error.response.data.error || "Product update failed!");

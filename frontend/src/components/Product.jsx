@@ -14,7 +14,9 @@ const Product = ({ product }) => {
       />
       <div className="p-6 flex flex-col gap-4">
         <h2 className="text-xl font-semibold text-gray-300">{product.name}</h2>
-        <p className="text-emerald-400 font-bold text-2xl">${product.price}</p>
+        <p className="text-emerald-400 font-bold text-2xl">
+          ${product.price.toFixed(2)}
+        </p>
         <Button
           type="button"
           loading={loading}

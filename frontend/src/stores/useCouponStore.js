@@ -41,6 +41,9 @@ export const useCouponStore = create((set, get) => ({
         coupons: state.coupons.map((c) =>
           c._id === coupon._id ? response.data : c
         ),
+        userCoupons: state.userCoupons.map((c) =>
+          c._id === coupon._id ? { ...c, ...response.data } : c
+        ),
       }));
       toast.success("Coupon updated successfully!");
     } catch (error) {

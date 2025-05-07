@@ -161,6 +161,13 @@ export const updateProduct = async (req, res) => {
 
     await product.save();
 
+    if (product.featured) {
+      const featuredProducts = await Product.find({
+        featured: true,
+      });
+      await redis.set("featuredProducts", JSON.stringify(featuredProducts));
+    }
+
     res.status(201).json(product);
   } catch (error) {
     res.status(500).json({ error: error.message });
