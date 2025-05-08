@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import {
-  LuCirclePlus,
   LuShoppingBag,
   LuChartNoAxesCombined,
   LuTicketPercent,
@@ -17,11 +16,6 @@ const tabs = [
     id: "products",
     name: "Products",
     icon: LuShoppingBag,
-  },
-  {
-    id: "create",
-    name: "Create Product",
-    icon: LuCirclePlus,
   },
   {
     id: "coupons",
@@ -60,7 +54,6 @@ const Dashboard = () => {
         ))}
       </div>
       {activeTab === "products" && <Products />}
-      {activeTab === "create" && <CreateProduct />}
       {activeTab === "analytics" && <Analytics />}
       {activeTab === "coupons" && <Coupons />}
     </main>

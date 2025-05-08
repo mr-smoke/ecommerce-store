@@ -18,7 +18,7 @@ export const createProduct = async (req, res) => {
     });
     product.save();
 
-    res.status(201).json({ product });
+    res.status(201).json(product);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

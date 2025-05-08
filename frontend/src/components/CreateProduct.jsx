@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { categories } from "../lib/data";
 import { toast } from "react-hot-toast";
 import { useProductStore } from "../stores/useProductStore";
+import { useModal } from "./Modal";
 import FormContainer from "./forms/FormContainer";
 import TextInput from "./forms/TextInput";
 import NumberInput from "./forms/NumberInput";
@@ -13,6 +14,7 @@ import Button from "./Button";
 
 const CreateProduct = () => {
   const { createProduct, loading } = useProductStore();
+  const { closeModal } = useModal();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -61,6 +63,7 @@ const CreateProduct = () => {
       quantity: "",
       image: "",
     });
+    closeModal();
   };
 
   const handleChange = (e) => {
@@ -69,75 +72,68 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="flex justify-center mb-8">
-      <FormContainer onSubmit={handleSubmit} title="Create Product">
-        <FileInput
-          id="image"
-          value={formData.image}
-          onChange={handleImageUpload}
-        />
-        <TextInput
-          label="Product Name"
-          id="name"
-          type="text"
-          required
-          minLength={3}
-          maxLength={32}
-          value={formData.name}
-          placeholder="Enter product name"
-          onChange={handleChange}
-        />
-        <TextAreaInput
-          label="Product Description"
-          id="description"
-          value={formData.description}
-          placeholder="Enter product description"
-          required
-          minLength={10}
-          maxLength={100}
-          rows="4"
-          onChange={handleChange}
-        />
-        <NumberInput
-          label="Price"
-          id="price"
-          type="number"
-          required
-          step="0.01"
-          min="0.01"
-          max="1000000"
-          value={formData.price}
-          placeholder="Enter product price"
-          onChange={handleChange}
-        />
-        <SelectInput
-          label="Category"
-          id="category"
-          value={formData.category}
-          placeholder="Select product category"
-          required
-          options={categories}
-          onChange={handleChange}
-        />
-        <NumberInput
-          label="Quantity"
-          id="quantity"
-          type="number"
-          required
-          min="1"
-          max="1000000"
-          value={formData.quantity}
-          placeholder="Enter product quantity"
-          onChange={handleChange}
-        />
-        <Button
-          type="submit"
-          loading={loading}
-          text="Create"
-          className="mt-3"
-        />
-      </FormContainer>
-    </div>
+    <FormContainer onSubmit={handleSubmit} title="Create Product">
+      <FileInput
+        id="image"
+        value={formData.image}
+        onChange={handleImageUpload}
+      />
+      <TextInput
+        label="Product Name"
+        id="name"
+        type="text"
+        required
+        minLength={3}
+        maxLength={32}
+        value={formData.name}
+        placeholder="Enter product name"
+        onChange={handleChange}
+      />
+      <TextAreaInput
+        label="Product Description"
+        id="description"
+        value={formData.description}
+        placeholder="Enter product description"
+        required
+        minLength={10}
+        maxLength={100}
+        rows="4"
+        onChange={handleChange}
+      />
+      <NumberInput
+        label="Price"
+        id="price"
+        type="number"
+        required
+        step="0.01"
+        min="0.01"
+        max="1000000"
+        value={formData.price}
+        placeholder="Enter product price"
+        onChange={handleChange}
+      />
+      <SelectInput
+        label="Category"
+        id="category"
+        value={formData.category}
+        placeholder="Select product category"
+        required
+        options={categories}
+        onChange={handleChange}
+      />
+      <NumberInput
+        label="Quantity"
+        id="quantity"
+        type="number"
+        required
+        min="1"
+        max="1000000"
+        value={formData.quantity}
+        placeholder="Enter product quantity"
+        onChange={handleChange}
+      />
+      <Button type="submit" loading={loading} text="Create" className="mt-3" />
+    </FormContainer>
   );
 };
 
