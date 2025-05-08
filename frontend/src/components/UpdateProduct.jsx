@@ -154,7 +154,7 @@ const UpdateProduct = ({ product }) => {
         placeholder="Enter product quantity"
         onChange={handleChange}
       />
-      <Button type="submit" loading={loading} text="Update" className="mt-3" />
+      <Button type="submit" loading={loading} text="Update" />
     </FormContainer>
   );
 };

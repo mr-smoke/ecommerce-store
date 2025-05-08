@@ -25,31 +25,31 @@ const CreateCoupon = () => {
   };
 
   return (
-    <FormContainer
-      onSubmit={handleSubmit}
-      className="sm:flex-row self-center py-6 sm:w-max"
-    >
+    <FormContainer onSubmit={handleSubmit} title="Create Coupon">
       <TextInput
+        label="Coupon Name"
         id="name"
         type="text"
         value={formData.name}
-        placeholder="Coupon Name"
+        placeholder="Enter coupon name"
         required
         minLength={6}
         maxLength={12}
         onChange={handleChange}
       />
       <NumberInput
+        label="Discount %"
         id="discount"
         type="number"
         value={formData.discount}
-        placeholder="Discount %"
+        placeholder="Enter discount percentage"
         required
         min="1"
         max="100"
         onChange={handleChange}
       />
       <NumberInput
+        label="Expiry Date"
         id="expiry"
         type="date"
         value={formData.expiry}

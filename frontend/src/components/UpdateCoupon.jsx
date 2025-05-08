@@ -75,7 +75,7 @@ const UpdateCoupon = ({ coupon }) => {
         defaultValue={coupon.expiry.split("T")[0]}
         onChange={handleChange}
       />
-      <Button type="submit" loading={loading} text="Update" className="mt-3" />
+      <Button type="submit" loading={loading} text="Update" />
     </FormContainer>
   );
 };

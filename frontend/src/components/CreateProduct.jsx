@@ -132,7 +132,7 @@ const CreateProduct = () => {
         placeholder="Enter product quantity"
         onChange={handleChange}
       />
-      <Button type="submit" loading={loading} text="Create" className="mt-3" />
+      <Button type="submit" loading={loading} text="Create" className="mt-0" />
     </FormContainer>
   );
 };
