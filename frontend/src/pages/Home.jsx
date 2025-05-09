@@ -1,7 +1,6 @@
 import FeaturedProducts from "../components/FeaturedProducts";
 import CategoryGrid from "../components/CategoryGrid";
 import PromotionalCoupons from "../components/PromotionalCoupons";
-import { useEffect } from "react";
 
 const Home = () => {
   return (

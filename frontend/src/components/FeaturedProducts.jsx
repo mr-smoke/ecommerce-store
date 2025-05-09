@@ -5,7 +5,7 @@ import Product from "../components/Product";
 import ProductSkeleton from "../components/ProductSkeleton";
 
 const FeaturedProducts = () => {
-  const { getFeaturedProducts, products, loading } = useProductStore();
+  const { getFeaturedProducts, products } = useProductStore();
 
   useEffect(() => {
     getFeaturedProducts();
@@ -13,16 +13,18 @@ const FeaturedProducts = () => {
 
   if (products.length === 0) return null;
 
+  const loading = true;
+
   return (
     <section className="pt-12">
       <h2 className="pb-3 text-2xl font-semibold bg-gradient-to-r text-transparent bg-clip-text from-emerald-300 to-emerald-400">
         Featured Products
       </h2>
-      {loading ? (
-        <ProductSkeleton count={4} />
-      ) : (
-        <Carousel length={products.length}>
-          {products.map((product) => (
+
+      <Carousel length={products.length}>
+        {loading && <ProductSkeleton count={4} />}
+        {!loading &&
+          products.map((product) => (
             <div
               key={product._id}
               className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 p-2"
@@ -30,8 +32,7 @@ const FeaturedProducts = () => {
               <Product product={product} />
             </div>
           ))}
-        </Carousel>
-      )}
+      </Carousel>
     </section>
   );
 };

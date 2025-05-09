@@ -3,6 +3,7 @@ import {
   LuShoppingBag,
   LuShoppingCart,
   LuBadgeDollarSign,
+  LuLoader,
 } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import axios from "../lib/axios";
@@ -45,8 +46,9 @@ const Analytics = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500">Loading...</p>
+      <div className="flex justify-center items-center gap-2">
+        <LuLoader className="animate-spin w-5 h-5" />
+        <span>Loading...</span>
       </div>
     );
   }

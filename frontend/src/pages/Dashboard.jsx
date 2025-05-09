@@ -6,7 +6,6 @@ import {
 } from "react-icons/lu";
 import { useState } from "react";
 import Products from "../components/Products";
-import CreateProduct from "../components/CreateProduct";
 import Analytics from "../components/Analytics";
 import Coupons from "../components/Coupons";
 import Button from "../components/Button";
@@ -44,7 +43,7 @@ const Dashboard = () => {
             type="button"
             text={tab.name}
             icon={tab.icon}
-            className={`w-max font-normal ${
+            className={`w-max ${
               activeTab === tab.id
                 ? "bg-emerald-600 hover:bg-emerald-700"
                 : "bg-gray-600 hover:bg-gray-700"

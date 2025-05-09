@@ -100,8 +100,8 @@ export const getProductsByCategory = async (req, res) => {
 export const getReccomendedProducts = async (req, res) => {
   try {
     const products = await Product.aggregate([
-      { $sample: { size: 4 } },
-      { $project: { _id: 1, name: 1, description: 1, price: 1, image: 1 } },
+      { $sample: { size: 3 } },
+      { $project: { _id: 1, name: 1, description: 1, price: 1, photo: 1 } },
     ]);
 
     res.status(200).json({ products });
