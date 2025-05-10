@@ -7,29 +7,24 @@ import Product from "../components/Product";
 import ProductSkeleton from "../components/ProductSkeleton";
 
 const Category = () => {
-  const { products, getProductsByCategory } = useProductStore();
+  const { products, getProductsByCategory, loading } = useProductStore();
   const { id } = useParams();
 
   useEffect(() => {
     getProductsByCategory(id);
   }, [getProductsByCategory]);
 
-  const loading = true;
-
   return (
     <main className="max-w-6xl mx-auto pt-24 px-2 flex flex-col gap-8">
       <h1 className="text-4xl font-semibold text-center text-emerald-400 pt-16">
         {id.charAt(0).toUpperCase() + id.slice(1)} Products
       </h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
         {loading && <ProductSkeleton count={4} />}
         {!loading && products.length === 0 && <EmptyCategory />}
         {!loading &&
           products.map((product) => (
-            <div className="p-2" key={product._id}>
-              <Product product={product} />
-            </div>
+            <Product product={product} key={product._id} />
           ))}
       </div>
     </main>

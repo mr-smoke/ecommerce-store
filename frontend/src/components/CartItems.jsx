@@ -8,7 +8,7 @@ import ProductSkeleton from "./ProductSkeleton";
 
 const CartItems = () => {
   const { cart, removeFromCart, updateCart } = useCartStore();
-  const { getSuggestedProducts, products } = useProductStore();
+  const { getSuggestedProducts, products, loading } = useProductStore();
 
   useEffect(() => {
     getSuggestedProducts();
@@ -24,8 +24,6 @@ const CartItems = () => {
       </div>
     );
   }
-
-  const loading = true;
 
   return (
     <>
