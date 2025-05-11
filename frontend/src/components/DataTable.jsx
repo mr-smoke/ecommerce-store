@@ -85,8 +85,8 @@ const DataTable = ({
   );
 
   return (
-    <section className="flex flex-col">
-      <div className="flex justify-between items-center mb-4">
+    <div className="flex flex-col">
+      <section className="flex flex-col sm:flex-row gap-2 justify-between items-center mb-4">
         <div className="flex items-center relative">
           <LuSearch className="absolute left-3 text-gray-400" />
           <input
@@ -117,8 +117,8 @@ const DataTable = ({
             <ModalContent>{addButtonModal}</ModalContent>
           </Modal>
         </div>
-      </div>
-      <div className="overflow-x-auto rounded-lg border border-gray-700">
+      </section>
+      <section className="overflow-x-auto rounded-lg border border-gray-700">
         <table className="min-w-full bg-gray-800">
           <thead className="bg-gray-700 text-gray-300 text-left text-xs leading-4 font-semibold uppercase tracking-wider">
             <tr>
@@ -155,13 +155,13 @@ const DataTable = ({
             {!loading && filteredData.map((data) => tableRows(data))}
           </tbody>
         </table>
-      </div>
+      </section>
       {filteredData.length > 0 && (
-        <div className="mt-4 text-sm text-gray-400">
+        <section className="mt-4 text-sm text-gray-400">
           Showing {filteredData.length} of {data.length} {tableTitle}
-        </div>
+        </section>
       )}
-    </section>
+    </div>
   );
 };
 

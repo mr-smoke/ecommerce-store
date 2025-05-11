@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   LuShoppingCart,
@@ -6,12 +7,15 @@ import {
   LuLogOut,
   LuUserPlus,
   LuLoader,
+  LuX,
+  LuMenu,
 } from "react-icons/lu";
 import { useUserStore } from "../stores/useUserStore";
 import { useCartStore } from "../stores/useCartStore";
 import Button from "./Button";
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const { logout, user, loading } = useUserStore();
   const { cart } = useCartStore();
   const isAdmin = user && user.role === "admin";
@@ -22,7 +26,17 @@ const Navbar = () => {
         <Link to="/" className="text-3xl font-bold text-emerald-400">
           E-Commerce
         </Link>
-        <nav className="flex items-center gap-4">
+        <button
+          className="sm:hidden text-gray-300 hover:text-emerald-400"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <LuX size={30} /> : <LuMenu size={30} />}
+        </button>
+        <nav
+          className={`sm:flex flex-col sm:flex-row items-center gap-4 pt-8 sm:pt-0 w-full sm:w-max justify-center flex-wrap ${
+            menuOpen ? "flex" : "hidden"
+          }`}
+        >
           <Link
             to="/"
             className="text-gray-300 hover:text-emerald-400 transition duration-300 ease-in-out"
@@ -57,7 +71,7 @@ const Navbar = () => {
               text="Logout"
               onClick={() => logout()}
               icon={LuLogOut}
-              className="bg-gray-600 hover:bg-gray-700 !font-normal"
+              className="bg-gray-600 hover:bg-gray-700 !font-normal w-max"
             />
           ) : (
             <>

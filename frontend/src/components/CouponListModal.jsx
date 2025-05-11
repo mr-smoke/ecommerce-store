@@ -29,7 +29,7 @@ const CouponListModal = () => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <h2 className="text-2xl text-emerald-400 font-bold">
+        <h2 className="text-2xl text-emerald-400 font-bold text-center">
           Available Coupons
         </h2>
         {userCoupons.map((coupon) => (

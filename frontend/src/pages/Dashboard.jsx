@@ -32,11 +32,11 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("products");
 
   return (
-    <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-24">
+    <main className="max-w-6xl mx-auto px-2 flex flex-col gap-8 pt-24 pb-4">
       <h1 className="text-3xl font-semibold text-center text-emerald-400 pt-16">
         Admin Dashboard
       </h1>
-      <div className="flex justify-center gap-4">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         {tabs.map((tab) => (
           <Button
             key={tab.name + tab}

@@ -1,18 +1,9 @@
 import { Link } from "react-router-dom";
 import { LuTrash2, LuCirclePlus, LuCircleMinus } from "react-icons/lu";
 import { useCartStore } from "../stores/useCartStore";
-import { useProductStore } from "../stores/useProductStore";
-import { useEffect } from "react";
-import Product from "./Product";
-import ProductSkeleton from "./ProductSkeleton";
 
 const CartItems = () => {
   const { cart, removeFromCart, updateCart } = useCartStore();
-  const { getSuggestedProducts, products, loading } = useProductStore();
-
-  useEffect(() => {
-    getSuggestedProducts();
-  }, [getSuggestedProducts]);
 
   if (cart.length === 0) {
     return (
@@ -26,16 +17,22 @@ const CartItems = () => {
   }
 
   return (
-    <>
+    <section className="flex flex-col gap-4">
       {cart.map((product) => (
         <div
           key={product._id}
-          className="flex justify-center items-center p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm"
+          className="flex justify-center items-center gap-4 sm:gap-8 p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm"
         >
-          <img src={product.photo} alt="Product" className="w-24 h-24" />
-          <div className="flex flex-col gap-3 flex-1 pl-8">
+          <img
+            src={product.photo}
+            alt="Product"
+            className="w-24 h-24 rounded-sm object-cover"
+          />
+          <div className="flex flex-col gap-3 flex-1">
             <h2 className="font-bold">{product.name}</h2>
-            <p className="text-sm text-gray-400">{product.description}</p>
+            <p className="text-sm text-gray-400 break-all">
+              {product.description}
+            </p>
             <button
               className="text-red-500 w-max"
               onClick={() => removeFromCart(product._id)}
@@ -43,7 +40,7 @@ const CartItems = () => {
               <LuTrash2 size={20} />
             </button>
           </div>
-          <div className="px-20">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-8">
             <div className="flex justify-center gap-2">
               <button
                 className="flex items-center text-lg  text-red-500"
@@ -65,22 +62,13 @@ const CartItems = () => {
                 <LuCirclePlus />
               </button>
             </div>
+            <p className="text-emerald-500 font-bold">
+              ${product.price.toFixed(2)}
+            </p>
           </div>
-          <p className="text-emerald-500 font-bold">
-            ${product.price.toFixed(2)}
-          </p>
         </div>
       ))}
-      <div className="flex flex-col gap-4 p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm mb-4">
-        <h2 className="text-2xl text-emerald-400 font-bold">
-          Also Recommended for You
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
-          {loading && <ProductSkeleton count={3} />}
-          {!loading && products.map((product) => <Product product={product} />)}
-        </div>
-      </div>
-    </>
+    </section>
   );
 };
 

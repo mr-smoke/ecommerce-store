@@ -4,7 +4,7 @@ import PromotionalCoupons from "../components/PromotionalCoupons";
 
 const Home = () => {
   return (
-    <main className="max-w-6xl mx-auto pt-24">
+    <main className="max-w-6xl mx-auto pt-24 px-2 xl:px-0">
       <h1 className="pt-16 text-5xl font-semibold text-center text-emerald-400">
         Explore Our Products
       </h1>

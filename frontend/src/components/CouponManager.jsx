@@ -8,7 +8,7 @@ const CouponManager = () => {
   const { removeCoupon, coupon } = useCartStore();
 
   return (
-    <div className="flex flex-col gap-4 p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm">
+    <section className="flex flex-col gap-4 p-6 bg-gray-800 rounded-lg border border-gray-700 shadow-sm">
       <div>
         <h2 className="text-2xl text-emerald-400 font-bold">Discount Coupon</h2>
         <p className="text-gray-400 text-xs pt-1">
@@ -45,7 +45,7 @@ const CouponManager = () => {
           <LuBadgeX />
         </button>
       )}
-    </div>
+    </section>
   );
 };
 
