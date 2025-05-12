@@ -19,7 +19,6 @@ const UpdateProduct = ({ product }) => {
     description: "",
     price: "",
     category: "",
-    quantity: "",
     image: "",
   });
 
@@ -58,7 +57,6 @@ const UpdateProduct = ({ product }) => {
       !formData.description &&
       !formData.price &&
       !formData.category &&
-      !formData.quantity &&
       !formData.image
     ) {
       closeModal();
@@ -70,7 +68,6 @@ const UpdateProduct = ({ product }) => {
       description: formData.description || product.description,
       price: formData.price || product.price,
       category: formData.category || product.category,
-      quantity: formData.quantity || product.quantity,
       image: formData.image,
     });
     setFormData({
@@ -78,7 +75,6 @@ const UpdateProduct = ({ product }) => {
       description: "",
       price: "",
       category: "",
-      quantity: "",
       image: "",
     });
     closeModal();
@@ -141,17 +137,6 @@ const UpdateProduct = ({ product }) => {
         placeholder="Select product category"
         required
         options={categories}
-        onChange={handleChange}
-      />
-      <NumberInput
-        label="Quantity"
-        id="quantity"
-        type="number"
-        required
-        min="1"
-        max="1000000"
-        defaultValue={product.quantity}
-        placeholder="Enter product quantity"
         onChange={handleChange}
       />
       <Button type="submit" loading={loading} text="Update" />

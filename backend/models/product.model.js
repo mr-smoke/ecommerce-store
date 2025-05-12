@@ -26,11 +26,6 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    quantity: {
-      type: Number,
-      maxLength: 32,
-      default: 0,
-    },
     photo: {
       type: String,
       default: "/nophoto.jpg",

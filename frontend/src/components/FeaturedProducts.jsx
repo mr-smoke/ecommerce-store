@@ -11,7 +11,7 @@ const FeaturedProducts = () => {
     getFeaturedProducts();
   }, [getFeaturedProducts]);
 
-  if (products.length === 0) return null;
+  if (!loading && products.length === 0) return null;
 
   return (
     <section className="pt-12">

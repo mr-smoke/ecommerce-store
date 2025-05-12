@@ -131,7 +131,7 @@ export const toggleFeaturedProducts = async (req, res) => {
 };
 
 export const updateProduct = async (req, res) => {
-  const { name, description, price, category, quantity, image } = req.body;
+  const { name, description, price, category, image } = req.body;
   const productId = req.params.id;
   let img = null;
 
@@ -156,7 +156,6 @@ export const updateProduct = async (req, res) => {
     product.description = description || product.description;
     product.price = price || product.price;
     product.category = category || product.category;
-    product.quantity = quantity || product.quantity;
     product.photo = image ? img : product.photo;
 
     await product.save();

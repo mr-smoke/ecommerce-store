@@ -13,7 +13,7 @@ const PromotionalCoupons = () => {
 
   const activeCoupons = coupons.filter((coupon) => coupon.isActive);
 
-  if (activeCoupons.length === 0) return null;
+  if (!loading && activeCoupons.length === 0) return null;
 
   if (loading) {
     return (

@@ -20,7 +20,6 @@ const CreateProduct = () => {
     description: "",
     price: "",
     category: "",
-    quantity: "",
     image: "",
   });
 
@@ -60,7 +59,6 @@ const CreateProduct = () => {
       description: "",
       price: "",
       category: "",
-      quantity: "",
       image: "",
     });
     closeModal();
@@ -119,17 +117,6 @@ const CreateProduct = () => {
         placeholder="Select product category"
         required
         options={categories}
-        onChange={handleChange}
-      />
-      <NumberInput
-        label="Quantity"
-        id="quantity"
-        type="number"
-        required
-        min="1"
-        max="1000000"
-        value={formData.quantity}
-        placeholder="Enter product quantity"
         onChange={handleChange}
       />
       <Button type="submit" loading={loading} text="Create" className="mt-0" />
