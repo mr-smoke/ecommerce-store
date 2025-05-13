@@ -28,7 +28,7 @@ const productSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      default: "/nophoto.jpg",
+      default: "/nophoto.avif",
     },
   },
   { timestamps: true }

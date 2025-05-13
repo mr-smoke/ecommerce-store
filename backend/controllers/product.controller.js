@@ -14,7 +14,7 @@ export const createProduct = async (req, res) => {
 
     const product = new Product({
       ...req.body,
-      photo: image ? img : "/nophoto.jpg",
+      photo: image ? img : "/nophoto.avif",
     });
     product.save();
 
