@@ -5,6 +5,7 @@ import {
   LuPackage,
   LuPackageCheck,
   LuPackageX,
+  LuLoader,
 } from "react-icons/lu";
 import axios from "../lib/axios";
 import { useCouponStore } from "../stores/useCouponStore";
@@ -54,8 +55,9 @@ const PurchaseSuccess = () => {
 
   if (isProcessing) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-300">Processing your payment...</p>
+      <div className="flex items-center justify-center gap-2 h-screen">
+        <LuLoader className="animate-spin w-5 h-5" />
+        <span>Loading...</span>
       </div>
     );
   }

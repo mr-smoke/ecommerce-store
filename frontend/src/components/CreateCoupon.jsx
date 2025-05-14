@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCouponStore } from "../stores/useCouponStore";
+import { useModal } from "./Modal";
 import Button from "./Button";
 import FormContainer from "./forms/FormContainer";
 import TextInput from "./forms/TextInput";
@@ -7,6 +8,7 @@ import NumberInput from "./forms/NumberInput";
 
 const CreateCoupon = () => {
   const { createCoupon, loading } = useCouponStore();
+  const { closeModal } = useModal();
   const [formData, setFormData] = useState({
     name: "",
     discount: "",
@@ -17,6 +19,7 @@ const CreateCoupon = () => {
     e.preventDefault();
     await createCoupon(formData);
     setFormData({ name: "", discount: "", expiry: "" });
+    closeModal();
   };
 
   const handleChange = (e) => {

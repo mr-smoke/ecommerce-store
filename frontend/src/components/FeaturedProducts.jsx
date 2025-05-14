@@ -22,7 +22,7 @@ const FeaturedProducts = () => {
         {loading && (
           <ProductSkeleton
             count={4}
-            className="sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 p-2"
+            className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex-shrink-0 p-2"
           />
         )}
         {!loading &&

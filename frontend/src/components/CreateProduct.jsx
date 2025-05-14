@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { categories } from "../lib/data";
 import { toast } from "react-hot-toast";
 import { useProductStore } from "../stores/useProductStore";

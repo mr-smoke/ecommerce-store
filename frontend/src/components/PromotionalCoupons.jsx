@@ -40,7 +40,7 @@ const PromotionalCoupons = () => {
   }
 
   return (
-    <section className="py-16">
+    <section className="py-16 text-center">
       <Carousel length={activeCoupons.length}>
         {activeCoupons.map((coupon) => (
           <div

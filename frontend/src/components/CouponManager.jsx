@@ -34,6 +34,9 @@ const CouponManager = () => {
           <CouponListModal />
         </ModalContent>
       </Modal>
+      <span className="text-xs text-center text-gray-400">
+        Each purchase of $10,000 or more qualifies for a discount coupon.
+      </span>
       {coupon && (
         <button
           className="text-red-500 underline font-medium inline-flex items-center justify-center gap-1 text-xs w-max self-center"
