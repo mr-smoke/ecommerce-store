@@ -53,6 +53,8 @@ export const createCheckoutSession = async (req, res) => {
   const { products, couponId } = req.body;
 
   try {
+    console.log("products", products);
+
     if (!products || !products.length) {
       return res.status(400).json({ message: "Cart is empty" });
     }
@@ -112,6 +114,7 @@ export const createCheckoutSession = async (req, res) => {
         ),
       },
     });
+    console.log("session", session);
 
     res.status(200).json({ id: session.id });
   } catch (error) {
