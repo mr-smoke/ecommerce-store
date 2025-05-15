@@ -10,6 +10,7 @@ import paymentRoutes from "./routes/payment.route.js";
 import analyticsRoutes from "./routes/analytics.route.js";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
+import path from "path";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,7 @@ app.use(
 );
 
 const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -40,6 +42,13 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/coupon", couponRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/analytics", analyticsRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  });
+}
 
 app.listen(PORT, () => {
   console.log("Server is running on port 5000");
