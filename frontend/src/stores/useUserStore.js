@@ -58,7 +58,7 @@ export const useUserStore = create((set, get) => ({
       const response = await axios.get("/auth/get-user");
       set({ user: response.data });
     } catch (error) {
-      toast.error(error.response.data.error || "Failed to fetch user!");
+      console.error("Error fetching user data:", error);
     } finally {
       set({ checkingAuth: false });
     }
@@ -99,7 +99,10 @@ axios.interceptors.response.use(
 
         return axios(originalRequest);
       } catch (refreshError) {
-        useUserStore.getState().logout();
+        if (useUserStore.getState().user) {
+          useUserStore.getState().logout();
+          toast.error("Session expired. Please log in again.");
+        }
         return Promise.reject(refreshError);
       }
     }

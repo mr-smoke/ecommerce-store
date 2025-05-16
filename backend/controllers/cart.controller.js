@@ -18,7 +18,7 @@ export const addToCart = async (req, res) => {
 
     res.status(201).json({ message: "Product added to cart" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -38,7 +38,7 @@ export const removeFromCart = async (req, res) => {
 
     res.status(201).json(user.cartItems);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -59,7 +59,7 @@ export const getCartItems = async (req, res) => {
 
     res.status(200).json(cartItems);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -91,6 +91,6 @@ export const updateCart = async (req, res) => {
 
     res.status(201).json(user.cartItems);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };

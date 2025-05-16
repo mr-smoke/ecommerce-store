@@ -13,9 +13,7 @@ const OrderSummary = () => {
   const { cart, coupon, total, subtotal } = useCartStore();
 
   const handleCheckout = async () => {
-    console.log("controller");
     const stripe = await stripePromise;
-    console.log("stripe", stripe);
 
     const response = await axios.post("/payment/create-checkout-session", {
       products: cart,
@@ -23,12 +21,10 @@ const OrderSummary = () => {
     });
 
     const session = await response.data;
-    console.log("session", session);
 
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
     });
-    console.log("result", result);
 
     if (result.error) {
       console.error(result.error);
